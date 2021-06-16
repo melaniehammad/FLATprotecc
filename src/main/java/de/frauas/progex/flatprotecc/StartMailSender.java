@@ -1,4 +1,4 @@
-
+package main.java.de.frauas.progex.flatprotecc;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
