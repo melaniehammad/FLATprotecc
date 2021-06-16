@@ -1,67 +1,89 @@
-package de.frauas.progex.flatprotecc;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.Properties;
 
-import jakarta.mail.Authenticator;
-import jakarta.mail.Message;
-import jakarta.mail.MessagingException;
-import jakarta.mail.PasswordAuthentication;
-import jakarta.mail.Session;
-import jakarta.mail.Transport;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.activation.*;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
-public class MailSender {
+public class StartMailSender {
 
-    public MailSender() {
-        sendMail("th2504tthh2504@gmail.com");
-    }
+	public static void main(String[] args) {
 
-    private void sendMail(String recipient) {
-        final String host = "smtp.gmail.com";
-        final String senderAddress = "FLATprotecc@gmail.com";
-        final String senderPassword = "Cheesecake0";
+		String username = "FLATprotecc@gmail.com";
+		String password = "Cheesecake0";
 
-        /*Properties properties = System.getProperties();
-		
-        String host = "smtp.gmail.com";
-	properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-	properties.put("mail.smtp.socketFactory.port", "465");
-	properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.port", "465");
-        //properties.put("mail.smtp.user", "FLATprotecc@gmail.com");*/
-        // creates a new session, no Authenticator (will connect() later)
-        //Works but times out
-        Properties properties = System.getProperties();
+		MailSender sender = new MailSender();
+		sender.login("smtp.gmail.com", "465", username, password);
 
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.timeout", "10000");
-        properties.put("mail.smtp.connectiontimeout", "10000");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "465");//587
+		try {
 
-        Session session = Session.getDefaultInstance(properties, null);
-        session.getProperties().put("mail.smtp.ssl.trust", "smtp.gmail.com");
+			sender.send("absender@provider.com", "Absender Name", "ana@erlenkoetter.net", "Test Test Test Betreff",
+					"Überall dieselbe alte Leier.\r\n\r\nDas Layout ist fertig, der Text lässt auf sich warten. "
+							+ "Damit das Layout nun nicht nackt im Raume steht und sich klein und leer vorkommt, "
+							+ "springe ich ein: der Blindtext. Genau zu diesem Zwecke erschaffen, immer im Schatten "
+							+ "meines großen Bruders »Lorem Ipsum«, freue ich mich jedes Mal, wenn Sie ein paar Zeilen "
+							+ "lesen. Denn esse est percipi - Sein ist wahrgenommen werden.");
 
-        try {
-            MimeMessage msg = new MimeMessage(session);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-            msg.setFrom(new InternetAddress(senderAddress));
-            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-            msg.setSubject("Your OneTimePasscode");
-            msg.setText("This is a simple text body\n\nLine Break Test");
+	}
 
-            //Transport.send(msg);
-            Transport t = session.getTransport("smtp");
-            t.connect(host, senderAddress, senderPassword);
-            t.sendMessage(msg, msg.getAllRecipients());
-            t.close();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
+	public static class MailSender {
+
+		protected Session mailSession;
+
+		public void login(String smtpHost, String smtpPort, String username, String password) {
+			Properties props = new Properties();
+			props.put("mail.smtp.host", smtpHost);
+			props.put("mail.smtp.socketFactory.port", smtpPort);
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", smtpPort);
+
+			Authenticator auth = new Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			};
+
+			this.mailSession = Session.getDefaultInstance(props, auth);
+			System.out.println("Eingeloggt.");
+		}
+
+		public void send(String senderMail, String senderName, String receiverAddresses, String subject, String message)
+				throws MessagingException, IllegalStateException, UnsupportedEncodingException {
+			if (mailSession == null) {
+				throw new IllegalStateException("Du musst dich zuerst einloggen (login()-Methode)");
+			}
+
+			MimeMessage msg = new MimeMessage(mailSession);
+			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+			msg.addHeader("format", "flowed");
+			msg.addHeader("Content-Transfer-Encoding", "8bit");
+
+			msg.setFrom(new InternetAddress(senderMail, senderName));
+			msg.setReplyTo(InternetAddress.parse(senderMail, false));
+			msg.setSubject(subject, "UTF-8");
+			msg.setText(message, "UTF-8");
+			msg.setSentDate(new Date());
+
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverAddresses, false));
+
+			System.out.println("Versende E-Mail...");
+			Transport.send(msg);
+			System.out.println("E-Mail versendet.");
+		}
+
+	}
+
 }
