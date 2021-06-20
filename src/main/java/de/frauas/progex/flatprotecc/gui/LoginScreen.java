@@ -5,6 +5,7 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import javax.swing.JOptionPane;
 /**
  *
  * @author lucas
@@ -92,10 +93,36 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
+        if(jTextFieldEmail.getText().equals("Test") && jTextFieldPassword.getText().equals("123")) { // check email + password
+            jLabelLogin.setText("Success");
+            //TODO: send email
+            String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.INFORMATION_MESSAGE);
+            //TODO check validation code correct
+            
+            java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
+                public void run() {
+                    new OverviewScreen().setVisible(true);
+                }
+            });
+        
+            this.dispose();
+            
+        } else {
+            jLabelLogin.setText("Failed");
+        
+        }
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     private void jButtonCreateNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateNewAccountActionPerformed
         // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(new Runnable() { // Open RegistrationScreen
+            public void run() {
+                new RegistrationScreen().setVisible(true);
+            }
+        });
+        
+        this.dispose();
+        
     }//GEN-LAST:event_jButtonCreateNewAccountActionPerformed
 
     /**
@@ -115,24 +142,25 @@ public class LoginScreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrationScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrationScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrationScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrationScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginScreen().setVisible(true);
+                
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCreateNewAccount;
     private javax.swing.JButton jButtonLogin;
