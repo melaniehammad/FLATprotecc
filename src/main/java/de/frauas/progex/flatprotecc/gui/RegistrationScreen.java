@@ -5,6 +5,8 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author lucas
@@ -39,6 +41,11 @@ public class RegistrationScreen extends javax.swing.JFrame {
         jLabelRegistration.setText("Registration");
 
         jButtonConfirm.setText("Confirm");
+        jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmActionPerformed(evt);
+            }
+        });
 
         jTextFieldEmail.setText("Email");
 
@@ -78,6 +85,31 @@ public class RegistrationScreen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+        // TODO add your handling code here:
+        
+        if(true) {//TODO check if userinfo is valid(not already there)
+            //send validation email
+            String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.INFORMATION_MESSAGE);
+            
+            if(true) { //validate email
+                //store user in database
+                JOptionPane.showMessageDialog(null,"Registration successfull!");
+
+                java.awt.EventQueue.invokeLater(new Runnable() {//Open LoginScreen
+                    public void run() {
+                        new LoginScreen().setVisible(true);
+                    }
+                });
+                dispose(); //close frame
+                
+            } else {
+            }
+        } else {
+        }
+        
+    }//GEN-LAST:event_jButtonConfirmActionPerformed
 
     
 
