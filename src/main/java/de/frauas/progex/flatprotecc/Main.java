@@ -10,7 +10,7 @@ package main.java.de.frauas.progex.flatprotecc;
  * @author tarik
  */
 public class Main {
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         System.out.println("Sample Text");
-    }
+    }*/
 }
