@@ -14,12 +14,11 @@ public class ValidationCodeGenerator {
     
     private String validationCode;
     
-    public String generateNewValidationCode() {
+    public void generateNewValidationCode() {
     
         Random generator = new Random();
         validationCode = Integer.toString(generator.nextInt(10000));
         
-        return validationCode;
     }
     
     public boolean checkValidationCode(String validationCode_) {
@@ -27,6 +26,9 @@ public class ValidationCodeGenerator {
         return validationCode_.equals(validationCode);
     }
     
+    public String getValidationCode() {
+        return validationCode;
+    }
     
     
 }

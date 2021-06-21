@@ -6,6 +6,8 @@
 package main.java.de.frauas.progex.flatprotecc.gui;
 
 import javax.swing.JOptionPane;
+import main.java.de.frauas.progex.flatprotecc.MailSender;
+import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
 
 /**
  *
@@ -143,24 +145,29 @@ public class RegistrationScreen extends javax.swing.JFrame {
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
         // TODO add your handling code here:
 
-        if(true) {//TODO check if userinfo is valid(not already there)
-            //send validation email
-            String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.INFORMATION_MESSAGE);
+        MailSender sender = new MailSender();
+        ValidationCodeGenerator gen = new ValidationCodeGenerator();
 
-            if(true) { //validate email
-                //store user in database
-                JOptionPane.showMessageDialog(null,"Registration successfull!");
+        gen.generateNewValidationCode();
 
-                java.awt.EventQueue.invokeLater(new Runnable() {//Open LoginScreen
+        if(sender.sendValidationCode(jTextFieldEmail.getText(), gen.getValidationCode())) {
+
+            String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
+            // check validation code correct
+            if(validationCode.equals(gen.getValidationCode())) {
+                java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
+                    //TODO store new user im db
                     public void run() {
                         new LoginScreen().setVisible(true);
                     }
                 });
-                dispose(); //close frame
 
+                this.dispose();
             } else {
+                JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
             }
         } else {
+            JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButtonConfirmActionPerformed

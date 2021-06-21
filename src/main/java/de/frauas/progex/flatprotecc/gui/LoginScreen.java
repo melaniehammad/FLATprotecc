@@ -6,6 +6,7 @@
 package main.java.de.frauas.progex.flatprotecc.gui;
 
 import javax.swing.JOptionPane;
+import main.java.de.frauas.progex.flatprotecc.*;
 /**
  *
  * @author lucas
@@ -139,23 +140,35 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
-        if(jTextFieldEmail.getText().equals("Test") && jTextFieldPassword.getText().equals("123")) { // check email + password
-            jLabelLogin.setText("Success");
-            //TODO: send email
-            String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.INFORMATION_MESSAGE);
-            //TODO check validation code correct
+        if(true) { //TODO check email + password
+            jTextFieldEmail.setText("lucas.merkert@stud.fra-uas.de");
             
-            java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
-                public void run() {
-                    new OverviewScreen().setVisible(true);
+            //send mail and generate validation code
+            MailSender sender = new MailSender();
+            ValidationCodeGenerator gen = new ValidationCodeGenerator();
+            
+            gen.generateNewValidationCode();
+            
+            if(sender.sendValidationCode(jTextFieldEmail.getText(), gen.getValidationCode())) {
+            
+                String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
+                // check validation code correct
+                if(validationCode.equals(gen.getValidationCode())) {
+                    java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
+                        public void run() {
+                            new OverviewScreen().setVisible(true);
+                        }
+                    });
+
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
                 }
-            });
-        
-            this.dispose();
-            
+            } else {
+                JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            jLabelLogin.setText("Failed");
-        
+            JOptionPane.showMessageDialog(null,"Email or passowrd wrong! Please try again.","Login failed", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonLoginActionPerformed
 

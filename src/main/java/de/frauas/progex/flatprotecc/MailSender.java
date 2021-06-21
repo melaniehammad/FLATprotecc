@@ -3,6 +3,8 @@ package main.java.de.frauas.progex.flatprotecc;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -19,12 +21,23 @@ public class MailSender {
     
     public MailSender(){}
     
-    public void sendValidationCode(String recepient, String code){
+    public boolean sendValidationCode(String recepient, String code){
         final String username = "FLATprotecc@gmail.com";
         final String password = "Cheesecake0";
         
         login(username, password);
-        send(recepient, code);
+        try {
+            send(recepient, code);
+            return true;
+        } catch (MessagingException ex) {
+            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 
     private void login(String username, String password) {
