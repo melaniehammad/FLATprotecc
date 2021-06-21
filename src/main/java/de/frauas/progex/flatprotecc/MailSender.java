@@ -19,12 +19,12 @@ public class MailSender {
     
     public MailSender(){}
     
-    public void sendValidationCode(String recepient, int code){
+    public void sendValidationCode(String recepient, String code){
         final String username = "FLATprotecc@gmail.com";
         final String password = "Cheesecake0";
         
         login(username, password);
-        send(recepient, Integer.toString(code));
+        send(recepient, code);
     }
 
     private void login(String username, String password) {
