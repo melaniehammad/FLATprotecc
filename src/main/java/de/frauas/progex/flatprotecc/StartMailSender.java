@@ -16,19 +16,19 @@ public class StartMailSender {
 
 	public static void main(String[] args) {
 
-		String username = "FLATprotecc@gmail.com";
-		String password = "Cheesecake0";
+		final String username = "FLATprotecc@gmail.com";
+		final String password = "Cheesecake0";
 
 		MailSender sender = new MailSender();
-		sender.login("smtp.gmail.com", "465", username, password);
+		sender.login(username, password);
 
 		try {
 
-			sender.send("absender@provider.com", "Absender Name", "ana@erlenkoetter.net", "Test Test Test Betreff",
-					"Ãœberall dieselbe alte Leier.\r\n\r\nDas Layout ist fertig, der Text lÃ¤sst auf sich warten. "
+			sender.send("ana@erlenkoetter.net",
+					"Überall dieselbe alte Leier.\r\n\r\nDas Layout ist fertig, der Text lÃ¤sst auf sich warten. "
 							+ "Damit das Layout nun nicht nackt im Raume steht und sich klein und leer vorkommt, "
 							+ "springe ich ein: der Blindtext. Genau zu diesem Zwecke erschaffen, immer im Schatten "
-							+ "meines groÃŸen Bruders Â»Lorem IpsumÂ«, freue ich mich jedes Mal, wenn Sie ein paar Zeilen "
+							+ "meines großen Bruders »Lorem Ipsum«, freue ich mich jedes Mal, wenn Sie ein paar Zeilen "
 							+ "lesen. Denn esse est percipi - Sein ist wahrgenommen werden.");
 
 		} catch (Exception e) {
@@ -41,13 +41,13 @@ public class StartMailSender {
 
 		protected Session mailSession;
 
-		public void login(String smtpHost, String smtpPort, String username, String password) {
+		public void login(final String username, final String password) {
 			Properties props = new Properties();
-			props.put("mail.smtp.host", smtpHost);
-			props.put("mail.smtp.socketFactory.port", smtpPort);
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
 			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.port", smtpPort);
+			props.put("mail.smtp.port", "465");
 
 			Authenticator auth = new Authenticator() {
 				@Override
@@ -56,15 +56,21 @@ public class StartMailSender {
 				}
 			};
 
-			this.mailSession = Session.getDefaultInstance(props, auth);
-			System.out.println("Eingeloggt.");
+			mailSession = Session.getDefaultInstance(props, auth);
+			System.out.println("Logged in.");
 		}
 
-		public void send(String senderMail, String senderName, String receiverAddresses, String subject, String message)
+		public void send(String receiverAddresses, String message)
 				throws MessagingException, IllegalStateException, UnsupportedEncodingException {
 			if (mailSession == null) {
-				throw new IllegalStateException("Du musst dich zuerst einloggen (login()-Methode)");
+				throw new IllegalStateException("Not logged in. Use login()-method");
 			}
+                        
+                        final String senderMail = "noreply-flatprotecc@gmail.com";
+                        final String senderName = "FLATprotecc";
+                        final String subject = "Your One-Time Password";
+                        
+                        
 
 			MimeMessage msg = new MimeMessage(mailSession);
 			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
