@@ -20,7 +20,7 @@ public class StartMailSender {
 		String password = "Cheesecake0";
 
 		MailSender sender = new MailSender();
-		sender.login("smtp.gmail.com", "465", username, password);
+		sender.login(username, password);
 
 		try {
 
@@ -41,13 +41,13 @@ public class StartMailSender {
 
 		protected Session mailSession;
 
-		public void login(String smtpHost, String smtpPort, String username, String password) {
+		public void login(String username, String password) {
 			Properties props = new Properties();
-			props.put("mail.smtp.host", smtpHost);
-			props.put("mail.smtp.socketFactory.port", smtpPort);
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
 			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.port", smtpPort);
+			props.put("mail.smtp.port", "465");
 
 			Authenticator auth = new Authenticator() {
 				@Override
@@ -57,24 +57,31 @@ public class StartMailSender {
 			};
 
 			this.mailSession = Session.getDefaultInstance(props, auth);
-			System.out.println("Eingeloggt.");
+			System.out.println("Logged In.");
 		}
 
-		public void send(String senderMail, String senderName, String receiverAddresses, String subject, String message)
+		public void send(String receiverAddresses, String code)
 				throws MessagingException, IllegalStateException, UnsupportedEncodingException {
 			if (mailSession == null) {
 				throw new IllegalStateException("Du musst dich zuerst einloggen (login()-Methode)");
 			}
+                        
+                        final String replyAddress = "noreply.FLATprotecc@gmail.com";
+                        final String senderName = "FLATprotecc";
+                        final String subject = "Your Validation Code";
+                        final String messageBody = "Your Validation Code is: " + code;
+                        
+                        
 
 			MimeMessage msg = new MimeMessage(mailSession);
 			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
 			msg.addHeader("format", "flowed");
 			msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-			msg.setFrom(new InternetAddress(senderMail, senderName));
+			msg.setFrom(new InternetAddress(replyAddress, senderName));
 			msg.setReplyTo(InternetAddress.parse(senderMail, false));
 			msg.setSubject(subject, "UTF-8");
-			msg.setText(message, "UTF-8");
+			msg.setText(messageBody, "UTF-8");
 			msg.setSentDate(new Date());
 
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverAddresses, false));
