@@ -14,28 +14,6 @@ import javax.mail.internet.MimeMessage;
 
 public class StartMailSender {
 
-	public static void main(String[] args) {
-
-		String username = "FLATprotecc@gmail.com";
-		String password = "Cheesecake0";
-
-		MailSender sender = new MailSender();
-		sender.login(username, password);
-
-		try {
-
-			sender.send("absender@provider.com", "Absender Name", "ana@erlenkoetter.net", "Test Test Test Betreff",
-					"Überall dieselbe alte Leier.\r\n\r\nDas Layout ist fertig, der Text lässt auf sich warten. "
-							+ "Damit das Layout nun nicht nackt im Raume steht und sich klein und leer vorkommt, "
-							+ "springe ich ein: der Blindtext. Genau zu diesem Zwecke erschaffen, immer im Schatten "
-							+ "meines großen Bruders »Lorem Ipsum«, freue ich mich jedes Mal, wenn Sie ein paar Zeilen "
-							+ "lesen. Denn esse est percipi - Sein ist wahrgenommen werden.");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 
 	public static class MailSender {
 
@@ -79,7 +57,7 @@ public class StartMailSender {
 			msg.addHeader("Content-Transfer-Encoding", "8bit");
 
 			msg.setFrom(new InternetAddress(replyAddress, senderName));
-			msg.setReplyTo(InternetAddress.parse(senderMail, false));
+			msg.setReplyTo(InternetAddress.parse(replyAddress, false));
 			msg.setSubject(subject, "UTF-8");
 			msg.setText(messageBody, "UTF-8");
 			msg.setSentDate(new Date());
