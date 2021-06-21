@@ -12,10 +12,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class StartMailSender {
-
-
-	public static class MailSender {
+public class MailSender {
 
 		protected Session mailSession;
 
@@ -69,6 +66,6 @@ public class StartMailSender {
 			System.out.println("E-Mail versendet.");
 		}
 
-	}
+	
 
 }
