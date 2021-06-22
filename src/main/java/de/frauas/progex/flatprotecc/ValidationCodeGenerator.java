@@ -17,7 +17,7 @@ public class ValidationCodeGenerator {
     public void generateNewValidationCode() {
     
         Random generator = new Random();
-        validationCode = Integer.toString(generator.nextInt(10000));
+        validationCode = String.format("%04d", generator.nextInt(10000));
         
     }
     
