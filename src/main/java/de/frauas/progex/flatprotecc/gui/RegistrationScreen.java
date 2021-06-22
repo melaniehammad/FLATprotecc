@@ -152,32 +152,36 @@ public class RegistrationScreen extends javax.swing.JFrame {
         ValidationCodeGenerator gen = new ValidationCodeGenerator();
 
         gen.generateNewValidationCode();
+        //checks if password and confirm password match
+        if(String.valueOf(jPasswordField.getPassword()).equals(String.valueOf(jPasswordFieldConf.getPassword()))){
+            
+            if(sender.sendValidationCode(jTextFieldEmail.getText(), gen.getValidationCode())) {
 
-        if(sender.sendValidationCode(jTextFieldEmail.getText(), gen.getValidationCode())) {
+                String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
+                // check validation code correct
+                if(validationCode.equals(gen.getValidationCode())) {
+                    java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
+                        //TODO store new user im db
+                        public void run() {
+                            new LoginScreen().setVisible(true);
+                        }
+                    });
 
-            String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
-            // check validation code correct
-            if(validationCode.equals(gen.getValidationCode())) {
-                java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
-                    //TODO store new user im db
-                    public void run() {
-                        new LoginScreen().setVisible(true);
-                    }
-                });
-
-                this.dispose();
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null,"Password and Confirm Password doesn't match!","Registration failed", JOptionPane.ERROR_MESSAGE);
         }
+            
         try{
-            //nicht fertig
-            int id = 20;
             
             stm = conn.createStatement();
-            String sql = "INSERT INTO accounts(id, pwd, mail) VALUES ('" + id + "','" + jPasswordField.getPassword()+ "', '" + jTextFieldEmail.getText() + "')";
+            String sql = "INSERT INTO accounts(id, pwd, mail) VALUES ('" + String.valueOf(jPasswordField.getPassword()) + "', '" + jTextFieldEmail.getText() + "')";
             stm.executeUpdate(sql);
             
             System.out.println(sql);
