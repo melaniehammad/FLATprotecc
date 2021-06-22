@@ -26,11 +26,6 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
         <dependency>
-            <groupId>group.id</groupId>
-            <artifactId>connect2DB</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>8.0.1</version>
@@ -41,6 +36,12 @@
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.20</version>
         </dependency>
     </dependencies>
 </project>
