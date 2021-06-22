@@ -5,6 +5,10 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import main.java.de.frauas.progex.flatprotecc.*;
 /**
@@ -140,36 +144,55 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
-        if(true) { //TODO check email + password
-            jTextFieldEmail.setText("lucas.merkert@stud.fra-uas.de");
+        System.out.println("############################");
+        System.out.println("Verbindung zu DB erfolgreich!");
+        System.out.println("############################");
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        Statement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.createStatement();
+            rs = stm.executeQuery("SELECT * FROM accounts WHERE mail='" + jTextFieldEmail.getText() + "'");
+            if(rs.getString("pwd").equals(jTextFieldPassword.getText())) { //TODO check email + password
+                jTextFieldEmail.setText("lucas.merkert@stud.fra-uas.de");
             
-            //send mail and generate validation code
-            MailSender sender = new MailSender();
-            ValidationCodeGenerator gen = new ValidationCodeGenerator();
-            
-            gen.generateNewValidationCode();
-            
-            if(sender.sendValidationCode(jTextFieldEmail.getText(), gen.getValidationCode())) {
-            
-                String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
-                // check validation code correct
-                if(validationCode.equals(gen.getValidationCode())) {
-                    java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
-                        public void run() {
-                            new OverviewScreen().setVisible(true);
-                        }
-                    });
+                //send mail and generate validation code
+                MailSender sender = new MailSender();
+                ValidationCodeGenerator gen = new ValidationCodeGenerator();
 
-                    this.dispose();
+                gen.generateNewValidationCode();
+
+                if(sender.sendValidationCode(jTextFieldEmail.getText(), gen.getValidationCode())) {
+
+                    String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
+                    // check validation code correct
+                    if(validationCode.equals(gen.getValidationCode())) {
+                        java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
+                            public void run() {
+                                new OverviewScreen().setVisible(true);
+                            }
+                        });
+
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Password wrong! Please try again.","Login failed", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null,"Email or passowrd wrong! Please try again.","Login failed", JOptionPane.ERROR_MESSAGE);
+            
+        } catch (SQLException ex){
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            JOptionPane.showMessageDialog(null,"Email wrong! Please try again.","Login failed", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     private void jButtonCreateNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateNewAccountActionPerformed
