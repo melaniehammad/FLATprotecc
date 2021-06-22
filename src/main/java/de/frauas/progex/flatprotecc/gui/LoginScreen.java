@@ -153,7 +153,9 @@ public class LoginScreen extends javax.swing.JFrame {
         ResultSet rs = null;
         try {
             stm = conn.createStatement();
-            rs = stm.executeQuery("SELECT * FROM accounts WHERE mail='" + jTextFieldEmail.getText() + "'");
+            rs = stm.executeQuery("SELECT * FROM accounts WHERE mail='" + jTextFieldEmail.getText() + "';");
+            rs.next();
+            System.out.println("pwd = " + rs.getString("pwd") + "    Mail eingabe : " + jTextFieldEmail.getText());
             if(rs.getString("pwd").equals(jTextFieldPassword.getText())) { //TODO check email + password
                 jTextFieldEmail.setText("lucas.merkert@stud.fra-uas.de");
             

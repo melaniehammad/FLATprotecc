@@ -5,7 +5,12 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
 import main.java.de.frauas.progex.flatprotecc.MailSender;
 import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
 
@@ -144,7 +149,11 @@ public class RegistrationScreen extends javax.swing.JFrame {
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
         // TODO add your handling code here:
-
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        Statement stm = null;
+        ResultSet rs = null;
+        
         MailSender sender = new MailSender();
         ValidationCodeGenerator gen = new ValidationCodeGenerator();
 
@@ -169,7 +178,24 @@ public class RegistrationScreen extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
         }
-
+        try{
+            //nicht fertig
+            int id = 20;
+            
+            stm = conn.createStatement();
+            String sql = "INSERT INTO accounts(id, pwd, mail) VALUES ('" + id + "','" + jTextFieldPassword.getText()+ "', '" + jTextFieldEmail.getText() + "')";
+            stm.executeUpdate(sql);
+            
+            System.out.println(sql);
+            System.out.println("INSERT complete");
+            
+        } catch (SQLException ex){
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+        }
+            
+        
+        
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
     private void jTextFieldPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPasswordActionPerformed
