@@ -29,15 +29,10 @@ public class MailSender {
         try {
             send(recepient, code);
             return true;
-        } catch (MessagingException ex) {
-            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException | IllegalStateException | UnsupportedEncodingException e) {
+            System.out.println(e.getMessage());
             return false;
-        } catch (IllegalStateException ex) {
-            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return true;
     }
 
     private void login(String username, String password) {
