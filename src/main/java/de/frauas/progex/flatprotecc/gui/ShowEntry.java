@@ -45,6 +45,7 @@ public class ShowEntry extends javax.swing.JFrame {
         jButtonDeleteEntry = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(400, 300));
 
         jLabelTitle.setText("Website/Application");
 

@@ -37,6 +37,7 @@ public class OverviewScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FLATprotecc - Password Manager");
+        setMinimumSize(new java.awt.Dimension(500, 500));
 
         jLabelFLATprotecc.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelFLATprotecc.setText("FLATprotecc");
