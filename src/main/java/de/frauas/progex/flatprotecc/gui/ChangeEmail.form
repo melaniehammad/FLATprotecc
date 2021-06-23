@@ -3,9 +3,6 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[300, 250]"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -26,18 +23,18 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,39 +45,32 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelOldEMail" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelNewEmail" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelPassword" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextFieldNewEmail" max="32767" attributes="0"/>
-                              <Component id="jTextFieldOldEmail" max="32767" attributes="0"/>
-                              <Component id="jPasswordFieldPassword" pref="172" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="36" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabelChangeEmail" min="-2" pref="122" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jButtonConfirm" min="-2" pref="94" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                                  <Component id="jButtonCancel" min="-2" pref="87" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
+                      <Component id="jLabelNewEmail" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabelNewEmailConf" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabelPassword" alignment="0" max="32767" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jPasswordFieldPassword" alignment="0" pref="172" max="32767" attributes="0"/>
+                      <Component id="jTextFieldNewEmail" max="32767" attributes="0"/>
+                      <Component id="jTextFieldConfNewEmail" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jLabelChangeEmail" min="-2" pref="163" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                  <Component id="jButtonConfirm" min="-2" pref="94" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                  <Component id="jButtonCancel" min="-2" pref="87" max="-2" attributes="0"/>
+                  <EmptySpace pref="47" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -90,48 +80,43 @@
                   <Component id="jLabelChangeEmail" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelOldEMail" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldOldEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelNewEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldNewEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelNewEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldNewEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelNewEmailConf" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldConfNewEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jPasswordFieldPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonConfirm" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabelOldEMail">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Old E-Mail"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabelNewEmail">
           <Properties>
-            <Property name="text" type="java.lang.String" value="New E-Mail"/>
+            <Property name="text" type="java.lang.String" value="New Email"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelNewEmailConf">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Confirm New E-Mail"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPassword">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Password"/>
+            <Property name="text" type="java.lang.String" value=" Password"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldOldEmail">
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldNewEmail">
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordFieldPassword">
         </Component>
@@ -143,6 +128,14 @@
             <Property name="text" type="java.lang.String" value="Change Email"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JButton" name="jButtonConfirm">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="11" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Confirm"/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JButton" name="jButtonCancel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancel"/>
@@ -151,13 +144,9 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonConfirm">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="11" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Confirm"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="jTextFieldNewEmail">
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldConfNewEmail">
         </Component>
       </SubComponents>
     </Container>
