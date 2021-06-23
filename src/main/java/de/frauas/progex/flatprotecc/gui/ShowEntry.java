@@ -41,7 +41,7 @@ public class ShowEntry extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButtonEditEntry = new javax.swing.JButton();
         jProgressBar1 = new javax.swing.JProgressBar();
-        jButtonConfirm = new javax.swing.JButton();
+        jButtonBack = new javax.swing.JButton();
         jButtonDeleteEntry = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,8 +117,8 @@ public class ShowEntry extends javax.swing.JFrame {
 
         jButtonEditEntry.setText("Edit Entry");
 
-        jButtonConfirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonConfirm.setText("Confirm");
+        jButtonBack.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonBack.setText("Back");
 
         jButtonDeleteEntry.setText("Delete Entry");
 
@@ -133,7 +133,7 @@ public class ShowEntry extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonEditEntry, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonConfirm, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonDeleteEntry, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel2Layout.setVerticalGroup(
@@ -145,7 +145,7 @@ public class ShowEntry extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                .addComponent(jButtonConfirm))
+                .addComponent(jButtonBack))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,7 +211,7 @@ public class ShowEntry extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonConfirm;
+    private javax.swing.JButton jButtonBack;
     private javax.swing.JButton jButtonDeleteEntry;
     private javax.swing.JButton jButtonEditEntry;
     private javax.swing.JLabel jLabelComment;
