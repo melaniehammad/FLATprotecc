@@ -11,11 +11,13 @@ package main.java.de.frauas.progex.flatprotecc.gui;
  */
 public class OverviewScreen extends javax.swing.JFrame {
 
+    private int userId;
     /**
      * Creates new form OverviewScreen
      */
-    public OverviewScreen() {
+    public OverviewScreen(int _userId) {
         initComponents();
+        userId = _userId;
     }
 
     /**
@@ -43,6 +45,11 @@ public class OverviewScreen extends javax.swing.JFrame {
         jLabelFLATprotecc.setText("FLATprotecc");
 
         jButtonAddEntry.setText("Add Entry");
+        jButtonAddEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddEntryActionPerformed(evt);
+            }
+        });
 
         jButtonChangeEmail.setText("Change E-Mail");
         jButtonChangeEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -52,6 +59,11 @@ public class OverviewScreen extends javax.swing.JFrame {
         });
 
         jButtonChangePassword.setText("Change Password");
+        jButtonChangePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonChangePasswordActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,45 +135,33 @@ public class OverviewScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChangeEmail().setVisible(true);
+                new ChangeEmail(userId).setVisible(true);
             }
         });
+        this.setEnabled(false);
     }//GEN-LAST:event_jButtonChangeEmailActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OverviewScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OverviewScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OverviewScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OverviewScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+    private void jButtonChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangePasswordActionPerformed
+        // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OverviewScreen().setVisible(true);
+                new ChangePassword(userId).setVisible(true);
             }
         });
-    }
+        this.setEnabled(false);
+    }//GEN-LAST:event_jButtonChangePasswordActionPerformed
+
+    private void jButtonAddEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddEntryActionPerformed
+        // TODO add your handling code here:
+         java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AddEntry(userId).setVisible(true);
+            }
+        });
+        this.setEnabled(false);
+    }//GEN-LAST:event_jButtonAddEntryActionPerformed
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAddEntry;

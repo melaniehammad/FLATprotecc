@@ -167,10 +167,11 @@ public class LoginScreen extends javax.swing.JFrame {
 
                     String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
                     // check validation code correct
+                    int userId = rs.getInt("id");
                     if(validationCode.equals(gen.getValidationCode())) {
                         java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
                             public void run() {
-                                new OverviewScreen().setVisible(true);
+                                new OverviewScreen(userId).setVisible(true);
                             }
                         });
 

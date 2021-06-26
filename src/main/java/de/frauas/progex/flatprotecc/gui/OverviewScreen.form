@@ -98,6 +98,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Add Entry"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAddEntryActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonChangeEmail">
           <Properties>
@@ -111,6 +114,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Change Password"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonChangePasswordActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
