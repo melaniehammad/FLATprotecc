@@ -169,8 +169,22 @@ public class RegistrationScreen extends javax.swing.JFrame {
                 String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
                 // check validation code correct
                 if(validationCode.equals(gen.getValidationCode())) {
+                    
+                    try{
+            
+                        stm = conn.createStatement();
+                        String sql = "INSERT INTO accounts(pwd, mail) VALUES ('" + String.valueOf(jPasswordField.getPassword()) + "', '" + jTextFieldEmail.getText() + "')";
+                        stm.executeUpdate(sql);
+
+                        System.out.println(sql);
+                        System.out.println("INSERT complete");
+
+                    } catch (SQLException ex){
+                        System.out.println("SQLException: " + ex.getMessage());
+                        System.out.println("SQLState: " + ex.getSQLState());
+                    }
+
                     java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
-                        //TODO store new user im db
                         public void run() {
                             new LoginScreen().setVisible(true);
                         }
@@ -187,19 +201,7 @@ public class RegistrationScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Password and Confirm Password doesn't match!","Registration failed", JOptionPane.ERROR_MESSAGE);
         }
             
-        try{
-            
-            stm = conn.createStatement();
-            String sql = "INSERT INTO accounts(id, pwd, mail) VALUES ('" + String.valueOf(jPasswordField.getPassword()) + "', '" + jTextFieldEmail.getText() + "')";
-            stm.executeUpdate(sql);
-            
-            System.out.println(sql);
-            System.out.println("INSERT complete");
-            
-        } catch (SQLException ex){
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-        }
+        
             
         
         

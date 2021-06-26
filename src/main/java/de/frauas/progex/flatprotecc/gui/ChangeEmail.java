@@ -5,20 +5,31 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+import main.java.de.frauas.progex.flatprotecc.MailSender;
+import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
+
 /**
  *
  * @author ana
  */
 public class ChangeEmail extends javax.swing.JFrame {
 
-    private int userID;
+    private int userId;
+    private OverviewScreen parent;
     /**
      * Creates new form ChangeEmail
      * @param _userID ID of the logged in user
      */
-    public ChangeEmail(int _userID) {
+    public ChangeEmail(int _userId) {
         initComponents();
-        userID = _userID;
+        userId = _userId;
+        //parent = _parent;
     }
 
     /**
@@ -55,9 +66,19 @@ public class ChangeEmail extends javax.swing.JFrame {
 
         jButtonConfirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonConfirm.setText("Confirm");
+        jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmActionPerformed(evt);
+            }
+        });
 
         jButtonCancel.setText("Cancel");
         jButtonCancel.setMaximumSize(new java.awt.Dimension(77, 23));
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,6 +147,67 @@ public class ChangeEmail extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+        // TODO add your handling code here:
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        Statement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.createStatement();
+            rs = stm.executeQuery("SELECT * FROM accounts WHERE id='" + userId + "';");
+            rs.next();
+            String tmp = String.valueOf(jPasswordFieldPassword.getPassword());
+            if(jTextFieldNewEmail.getText().equals(jTextFieldConfNewEmail.getText())) {
+                if(rs.getString("pwd").equals(tmp)) {
+                   MailSender sender = new MailSender();
+                   ValidationCodeGenerator gen = new ValidationCodeGenerator();
+
+                   gen.generateNewValidationCode();
+
+                   if(sender.sendValidationCode(jTextFieldNewEmail.getText(), gen.getValidationCode())) {
+
+                       String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
+                       // check validation code correct
+                       
+                       if(validationCode.equals(gen.getValidationCode())) {
+                           
+                            stm = conn.createStatement();
+                            String sql = "UPDATE accounts SET mail = '" + jTextFieldNewEmail.getText() +"' WHERE id = " + userId + ";";
+                            stm.executeUpdate(sql);
+
+                            System.out.println(sql);
+                            System.out.println("UPDATE complete");
+                           
+                           
+                           JOptionPane.showInputDialog(null,"Email changed sucessfully!","Change Email", JOptionPane.INFORMATION_MESSAGE);
+                           this.dispose();
+                       } else {
+                           JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
+                       }
+                   } else {
+                       JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
+                   }
+                } else {
+                    JOptionPane.showMessageDialog(null,"Password wrong! Please try again.","Login failed", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null,"Email does not match with confirmed email!","Email Change", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex){
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        
+    }//GEN-LAST:event_jButtonConfirmActionPerformed
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        // TODO add your handling code here:
+        //parent.setEnabled(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

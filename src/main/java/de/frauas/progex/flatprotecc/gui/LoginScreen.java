@@ -155,7 +155,7 @@ public class LoginScreen extends javax.swing.JFrame {
             System.out.println("pwd = " + rs.getString("pwd") + "    Mail eingabe : " + jTextFieldEmail.getText());
             
             String tmp = String.valueOf(jPasswordField.getPassword());
-            if(rs.getString("pwd").equals(tmp)) { //TODO check email + password
+            if(rs.getString("pwd").equals(tmp)) {
             
                 //send mail and generate validation code
                 MailSender sender = new MailSender();
