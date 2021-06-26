@@ -58,16 +58,6 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabelTitle" max="32767" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jLabelTitleContent" min="-2" pref="112" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabelUsername" min="-2" pref="95" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jLabelUsernameContent" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabelEmail" min="-2" pref="95" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabelEMailContent" max="32767" attributes="0"/>
@@ -81,6 +71,22 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabelCommentContent" max="32767" attributes="0"/>
                               <Component id="jLabelPasswordContent" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabelUsername" min="-2" pref="95" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabelTitle" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelTitleContent" max="32767" attributes="0"/>
+                              <Component id="jLabelUsernameContent" pref="112" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -214,6 +220,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+          <Properties>
+            <Property name="maximum" type="int" value="99"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonBack">
           <Properties>
