@@ -22,6 +22,17 @@ public class MailSender {
     public MailSender(){}
     
     public boolean sendValidationCode(String recepient, String code){
+        /*Connect2DB conn = new Connect2DB();
+        Connection database = conn.StartConnection();
+        Statement statement = database.createStatement();
+        ResultSet res = statement.executeQuery("SELECT username, password FROM logindata");
+        
+        final String username = res.getString(1);
+        final String password = res.getString(2);
+        
+        statement.close();
+        database.close();*/
+        
         final String username = "FLATprotecc@gmail.com";
         final String password = "Cheesecake0";
         
