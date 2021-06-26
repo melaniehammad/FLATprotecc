@@ -37,18 +37,13 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="21" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,28 +60,28 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabelTitle" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextFieldTitle" min="-2" pref="111" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabelComment" min="-2" pref="95" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextComment" max="32767" attributes="0"/>
+                          <Component id="jLabelTitleContent" min="-2" pref="112" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabelUsername" min="-2" pref="95" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextUsername" max="32767" attributes="0"/>
+                          <Component id="jLabelUsernameContent" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabelEmail" min="-2" pref="95" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextEmail" max="32767" attributes="0"/>
+                          <Component id="jLabelEMailContent" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabelPassword" min="-2" pref="95" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelPassword" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
+                              <Component id="jLabelComment" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jPasswordField" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelCommentContent" max="32767" attributes="0"/>
+                              <Component id="jLabelPasswordContent" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -96,34 +91,30 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabelTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelTitleContent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabelUsername" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelUsernameContent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabelEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelEMailContent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabelPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelPasswordContent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextFieldTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextUsername" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelUsername" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jPasswordField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelPassword" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="41" max="32767" attributes="0"/>
-                          <Component id="jLabelComment" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="31" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="jTextComment" alignment="0" pref="86" max="32767" attributes="0"/>
+                      <Component id="jLabelCommentContent" alignment="3" min="-2" pref="92" max="-2" attributes="0"/>
+                      <Component id="jLabelComment" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -131,21 +122,15 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jTextFieldTitle">
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabelTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="Website/Application"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextUsername">
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabelUsername">
           <Properties>
             <Property name="text" type="java.lang.String" value="Username"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextEmail">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelEmail">
           <Properties>
@@ -157,14 +142,35 @@
             <Property name="text" type="java.lang.String" value="Password"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextComment">
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabelComment">
           <Properties>
             <Property name="text" type="java.lang.String" value="Comment"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="jPasswordField">
+        <Component class="javax.swing.JLabel" name="jLabelTitleContent">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Title Content"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelUsernameContent">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Username Content"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelEMailContent">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="E-Mail Content"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelPasswordContent">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Password Content"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelCommentContent">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Comment Content"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
