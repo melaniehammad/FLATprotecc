@@ -5,6 +5,8 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author lucas
@@ -133,32 +135,52 @@ public class OverviewScreen extends javax.swing.JFrame {
 
     private void jButtonChangeEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangeEmailActionPerformed
         // TODO add your handling code here:
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChangeEmail(userId).setVisible(true);
+        JFrame frame = this;
+        frame.setEnabled(false);
+        ChangeEmail ce;
+        ce = new ChangeEmail(userId);
+        ce.setVisible(true);
+        
+        ce.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                frame.setEnabled(true);
             }
         });
-        this.setEnabled(false);
     }//GEN-LAST:event_jButtonChangeEmailActionPerformed
 
     private void jButtonChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangePasswordActionPerformed
         // TODO add your handling code here:
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChangePassword(userId).setVisible(true);
+        JFrame frame = this;
+        frame.setEnabled(false);
+        ChangePassword cp;
+        cp = new ChangePassword(userId);
+        cp.setVisible(true);
+        
+        cp.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                frame.setEnabled(true);
             }
         });
-        this.setEnabled(false);
+        
+        
     }//GEN-LAST:event_jButtonChangePasswordActionPerformed
 
     private void jButtonAddEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddEntryActionPerformed
         // TODO add your handling code here:
-         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddEntry(userId).setVisible(true);
+        JFrame frame = this;
+        frame.setEnabled(false);
+        AddEntry ae;
+        ae = new AddEntry(userId);
+        ae.setVisible(true);
+        
+        ae.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                frame.setEnabled(true);
             }
         });
-        this.setEnabled(false);
     }//GEN-LAST:event_jButtonAddEntryActionPerformed
 
 

@@ -5,6 +5,7 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.awt.event.WindowAdapter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +31,7 @@ public class ChangeEmail extends javax.swing.JFrame {
         initComponents();
         userId = _userId;
         //parent = _parent;
+        
     }
 
     /**
@@ -52,7 +54,7 @@ public class ChangeEmail extends javax.swing.JFrame {
         jTextFieldNewEmail = new javax.swing.JTextField();
         jTextFieldConfNewEmail = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(300, 250));
 
         jLabelNewEmail.setText("New Email");
@@ -181,7 +183,7 @@ public class ChangeEmail extends javax.swing.JFrame {
                             System.out.println("UPDATE complete");
                            
                            
-                           JOptionPane.showInputDialog(null,"Email changed sucessfully!","Change Email", JOptionPane.INFORMATION_MESSAGE);
+                           JOptionPane.showMessageDialog(null,"Email changed sucessfully!","Change Email", JOptionPane.INFORMATION_MESSAGE);
                            this.dispose();
                        } else {
                            JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
@@ -190,7 +192,7 @@ public class ChangeEmail extends javax.swing.JFrame {
                        JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
                    }
                 } else {
-                    JOptionPane.showMessageDialog(null,"Password wrong! Please try again.","Login failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Password wrong! Please try again.","Authentification failed", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(null,"Email does not match with confirmed email!","Email Change", JOptionPane.ERROR_MESSAGE);

@@ -5,6 +5,15 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+import main.java.de.frauas.progex.flatprotecc.MailSender;
+import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
+
 /**
  *
  * @author ana
@@ -32,14 +41,14 @@ public class ChangePassword extends javax.swing.JFrame {
         jLabelOldPassword = new javax.swing.JLabel();
         jLabelNewEmail = new javax.swing.JLabel();
         jLabelConfNewPassword = new javax.swing.JLabel();
-        jPasswordFieldPassword = new javax.swing.JPasswordField();
+        jPasswordFieldNewPwdConf = new javax.swing.JPasswordField();
         jLabelChangePassword = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        jPasswordFieldOldPwd = new javax.swing.JPasswordField();
+        jPasswordFieldNewPwd = new javax.swing.JPasswordField();
         jButtonConfirm = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(300, 250));
 
         jLabelOldPassword.setText("Old Password");
@@ -53,9 +62,19 @@ public class ChangePassword extends javax.swing.JFrame {
 
         jButtonConfirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonConfirm.setText("Confirm");
+        jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmActionPerformed(evt);
+            }
+        });
 
         jButtonCancel.setText("Cancel");
         jButtonCancel.setMaximumSize(new java.awt.Dimension(77, 23));
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -69,9 +88,9 @@ public class ChangePassword extends javax.swing.JFrame {
                     .addComponent(jLabelConfNewPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1)
-                    .addComponent(jPasswordField2))
+                    .addComponent(jPasswordFieldNewPwdConf, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                    .addComponent(jPasswordFieldOldPwd)
+                    .addComponent(jPasswordFieldNewPwd))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -91,15 +110,15 @@ public class ChangePassword extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelOldPassword)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordFieldOldPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNewEmail)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordFieldNewPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelConfNewPassword)
-                    .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordFieldNewPwdConf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonConfirm)
@@ -126,6 +145,67 @@ public class ChangePassword extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
+
+    private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+        // TODO add your handling code here:
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        Statement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = conn.createStatement();
+            rs = stm.executeQuery("SELECT * FROM accounts WHERE id='" + userId + "';");
+            rs.next();
+            String newPassword = String.valueOf(jPasswordFieldNewPwd.getPassword());
+            String newPasswordConfirm = String.valueOf(jPasswordFieldNewPwdConf.getPassword());
+            String oldPassword = String.valueOf(jPasswordFieldOldPwd.getPassword());
+            if(newPassword.equals(newPasswordConfirm)) {
+                if(rs.getString("pwd").equals(oldPassword)) {
+                   MailSender sender = new MailSender();
+                   ValidationCodeGenerator gen = new ValidationCodeGenerator();
+
+                   gen.generateNewValidationCode();
+
+                   if(sender.sendValidationCode(rs.getString("mail"), gen.getValidationCode())) {
+
+                       String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
+                       // check validation code correct
+                       
+                       if(validationCode.equals(gen.getValidationCode())) {
+                           
+                            stm = conn.createStatement();
+                            String sql = "UPDATE accounts SET pwd = '" + String.valueOf(jPasswordFieldNewPwd.getPassword()) +"' WHERE id = " + userId + ";";
+                            stm.executeUpdate(sql);
+
+                            System.out.println(sql);
+                            System.out.println("UPDATE complete");
+                           
+                           
+                           JOptionPane.showMessageDialog(null,"Password changed sucessfully!","Change Password", JOptionPane.INFORMATION_MESSAGE);
+                           this.dispose();
+                       } else {
+                           JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
+                       }
+                   } else {
+                       JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
+                   }
+                } else {
+                    JOptionPane.showMessageDialog(null,"Password wrong! Please try again.","Authentification failed", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null,"Password does not match with confirmed password!","Password Change", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex){
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+    }//GEN-LAST:event_jButtonConfirmActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancel;
@@ -135,8 +215,8 @@ public class ChangePassword extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNewEmail;
     private javax.swing.JLabel jLabelOldPassword;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JPasswordField jPasswordFieldPassword;
+    private javax.swing.JPasswordField jPasswordFieldNewPwd;
+    private javax.swing.JPasswordField jPasswordFieldNewPwdConf;
+    private javax.swing.JPasswordField jPasswordFieldOldPwd;
     // End of variables declaration//GEN-END:variables
 }
