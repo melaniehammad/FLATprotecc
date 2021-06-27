@@ -5,6 +5,15 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+import main.java.de.frauas.progex.flatprotecc.MailSender;
+import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
+
 /**
  *
  * @author ana
@@ -46,7 +55,7 @@ public class AddEntry extends javax.swing.JFrame {
         jLabelAddNewEntry = new javax.swing.JLabel();
         jButtonCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 400));
 
         jLabelTitle.setText("Website/Application");
@@ -127,11 +136,21 @@ public class AddEntry extends javax.swing.JFrame {
 
         jButtonConfirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonConfirm.setText("Confirm");
+        jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmActionPerformed(evt);
+            }
+        });
 
         jLabelAddNewEntry.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelAddNewEntry.setText("Add New Entry");
 
         jButtonCancel.setText("Cancel");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,6 +193,44 @@ public class AddEntry extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
+
+    private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+        // TODO add your handling code here:
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        Statement stm = null;
+        ResultSet rs = null;
+        try {
+            String password = String.valueOf(jPasswordField.getPassword());
+            String passwordConfirm = String.valueOf(jPasswordFieldConf.getPassword());
+            if(password.equals(passwordConfirm)) {
+                if(jTextEmail.getText().equals("") && jTextUsername.getText().equals("")) {
+                    stm = conn.createStatement();
+                    String sql = "INSERT INTO entry (acc_id, title, username, pwd, mail, comment)" +
+                                 "VALUES (" + userId + ",'" + jTextFieldTitle.getText() + "','" +
+                                 jTextUsername.getText() + "','"+ String.valueOf(jPasswordField.getPassword()) +"','"+
+                                 jTextEmail.getText() + "','" + jTextComment.getText() +"');";
+                    stm.executeUpdate(sql);
+
+                    System.out.println(sql);
+                    System.out.println("UPDATE complete");
+                } else {
+                JOptionPane.showMessageDialog(null,"Please enter a username or Email","Incomplete data", JOptionPane.ERROR_MESSAGE);
+                } 
+            } else {
+                JOptionPane.showMessageDialog(null,"Password does not match with confirmed password!","Password Change", JOptionPane.ERROR_MESSAGE);
+            }              
+        } catch (SQLException ex){
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+    }//GEN-LAST:event_jButtonConfirmActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
