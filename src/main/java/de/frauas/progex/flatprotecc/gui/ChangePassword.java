@@ -5,6 +5,11 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+
 /**
  *
  * @author ana
@@ -30,12 +35,12 @@ public class ChangePassword extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabelOldPassword = new javax.swing.JLabel();
-        jLabelNewEmail = new javax.swing.JLabel();
-        jLabelConfNewPassword = new javax.swing.JLabel();
-        jPasswordFieldPassword = new javax.swing.JPasswordField();
+        jLabelNewPassword = new javax.swing.JLabel();
+        jLabelNewPasswordConf = new javax.swing.JLabel();
+        jFieldNewPasswordConf = new javax.swing.JPasswordField();
         jLabelChangePassword = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        jFieldOldPassword = new javax.swing.JPasswordField();
+        jFieldNewPassword = new javax.swing.JPasswordField();
         jButtonConfirm = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
 
@@ -44,15 +49,26 @@ public class ChangePassword extends javax.swing.JFrame {
 
         jLabelOldPassword.setText("Old Password");
 
-        jLabelNewEmail.setText("New Password");
+        jLabelNewPassword.setText("New Password");
 
-        jLabelConfNewPassword.setText("Confirm New Password");
+        jLabelNewPasswordConf.setText("Confirm New Password");
 
         jLabelChangePassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelChangePassword.setText("Change Password");
 
+        jFieldNewPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFieldNewPasswordActionPerformed(evt);
+            }
+        });
+
         jButtonConfirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonConfirm.setText("Confirm");
+        jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmActionPerformed(evt);
+            }
+        });
 
         jButtonCancel.setText("Cancel");
         jButtonCancel.setMaximumSize(new java.awt.Dimension(77, 23));
@@ -65,13 +81,13 @@ public class ChangePassword extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelOldPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelNewEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelConfNewPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabelNewPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelNewPasswordConf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1)
-                    .addComponent(jPasswordField2))
+                    .addComponent(jFieldNewPasswordConf, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                    .addComponent(jFieldOldPassword)
+                    .addComponent(jFieldNewPassword))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -91,15 +107,15 @@ public class ChangePassword extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelOldPassword)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFieldOldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNewEmail)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelNewPassword)
+                    .addComponent(jFieldNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelConfNewPassword)
-                    .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelNewPasswordConf)
+                    .addComponent(jFieldNewPasswordConf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonConfirm)
@@ -126,17 +142,35 @@ public class ChangePassword extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        if (jFieldNewPassword.getText().equals(jFieldNewPasswordConf.getText())) {
+            try {
+                final String sql = "UPDATE accounts SET mail=" + jFieldNewPassword.getText() + "WHERE id=" + userId + ";";
+                Statement statement = conn.createStatement();
+                statement.executeUpdate(sql);
+            } catch (SQLException ex) {
+                System.err.println("SQL Exception: " + ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonConfirmActionPerformed
+
+    private void jFieldNewPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFieldNewPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFieldNewPasswordActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonConfirm;
+    private javax.swing.JPasswordField jFieldNewPassword;
+    private javax.swing.JPasswordField jFieldNewPasswordConf;
+    private javax.swing.JPasswordField jFieldOldPassword;
     private javax.swing.JLabel jLabelChangePassword;
-    private javax.swing.JLabel jLabelConfNewPassword;
-    private javax.swing.JLabel jLabelNewEmail;
+    private javax.swing.JLabel jLabelNewPassword;
+    private javax.swing.JLabel jLabelNewPasswordConf;
     private javax.swing.JLabel jLabelOldPassword;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JPasswordField jPasswordFieldPassword;
     // End of variables declaration//GEN-END:variables
 }

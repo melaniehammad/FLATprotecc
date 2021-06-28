@@ -5,6 +5,13 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+
 /**
  *
  * @author ana
@@ -55,6 +62,11 @@ public class ChangeEmail extends javax.swing.JFrame {
 
         jButtonConfirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonConfirm.setText("Confirm");
+        jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmActionPerformed(evt);
+            }
+        });
 
         jButtonCancel.setText("Cancel");
         jButtonCancel.setMaximumSize(new java.awt.Dimension(77, 23));
@@ -126,6 +138,20 @@ public class ChangeEmail extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        if (jTextFieldNewEmail.getText().equals(jTextFieldConfNewEmail.getText())) {
+            try {
+                final String sql = "UPDATE accounts SET mail=" + jTextFieldNewEmail.getText() + "WHERE id=" + userID + ";";
+                Statement statement = conn.createStatement();
+                statement.executeUpdate(sql);
+            } catch (SQLException ex) {
+                System.err.println("SQL Exception: " + ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonConfirmActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
