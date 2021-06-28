@@ -147,7 +147,7 @@ public class ChangePassword extends javax.swing.JFrame {
         Connection conn = connCreator.StartConnection();
         if (jFieldNewPassword.getText().equals(jFieldNewPasswordConf.getText())) {
             try {
-                final String sql = "UPDATE accounts SET mail=" + jFieldNewPassword.getText() + "WHERE id=" + userId + ";";
+                final String sql = "UPDATE accounts SET pwd=" + jFieldNewPassword.getText() + "WHERE id=" + userId + ";";
                 Statement statement = conn.createStatement();
                 statement.executeUpdate(sql);
             } catch (SQLException ex) {
