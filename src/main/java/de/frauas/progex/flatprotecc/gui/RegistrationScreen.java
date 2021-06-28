@@ -9,9 +9,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Base64;
 import javax.swing.JOptionPane;
 import main.java.de.frauas.progex.flatprotecc.Connect2DB;
 import main.java.de.frauas.progex.flatprotecc.MailSender;
+import main.java.de.frauas.progex.flatprotecc.PasswordManager;
 import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
 
 /**
@@ -188,9 +190,14 @@ public class RegistrationScreen extends javax.swing.JFrame {
         }
             
         try{
-            
+            PasswordManager pwm = new PasswordManager();
+            byte[] salt = pwm.getNewSalt();
+            final String hash = pwm.hash(jPasswordField.getPassword().toString(), salt);
             stm = conn.createStatement();
-            String sql = "INSERT INTO accounts(id, pwd, mail) VALUES ('" + String.valueOf(jPasswordField.getPassword()) + "', '" + jTextFieldEmail.getText() + "')";
+            String sql = "INSERT INTO accounts(id, salt, hash, mail) VALUES ('" 
+                    + new String(Base64.getEncoder().encode(salt)) + "', '" 
+                    + hash + "', '"
+                    + jTextFieldEmail.getText() + "')";
             stm.executeUpdate(sql);
             
             System.out.println(sql);

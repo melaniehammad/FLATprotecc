@@ -24,6 +24,9 @@ public class PasswordManager {
         byte[] salt = pwm.getNewSalt();
         System.out.println(pwm.hash(e, salt));
         
+        
+        System.out.println(pwm.verifyPassword("aaaa", pwm.hash("aaaa", salt), salt));
+        
        
     }
 
