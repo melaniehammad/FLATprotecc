@@ -5,6 +5,14 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+
 /**
  *
  * @author ana
@@ -127,6 +135,11 @@ public class AddEntry extends javax.swing.JFrame {
 
         jButtonConfirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonConfirm.setText("Confirm");
+        jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmActionPerformed(evt);
+            }
+        });
 
         jLabelAddNewEntry.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelAddNewEntry.setText("Add New Entry");
@@ -174,6 +187,39 @@ public class AddEntry extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+
+        //try{
+        if (jPasswordField.getText().equals(jPasswordFieldConf.getText())) {
+
+            final String serviceName = jTextFieldTitle.getText();
+            final String userName = jTextUsername.getText();
+            final String eMail = jTextEmail.getText();
+            final String password = jPasswordField.getText();
+            final String comment = jTextComment.getText();
+
+            try {
+                Statement stm = conn.createStatement();
+                String sql = "INSERT INTO " + Integer.toString(userId) + " VALUES ("
+                        + serviceName + ", "
+                        + userName + ", "
+                        + eMail + ", "
+                        + password + ", "
+                        + comment + ");";
+                stm.executeUpdate(sql);
+            } catch (SQLException ex) {
+                Logger.getLogger(AddEntry.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        /*}catch(NullPointerException ex){
+        JOptionPane.showMessageDialog(null, "Input error!", "Please enter Website/Application name", JOptionPane.ERROR_MESSAGE);
+        }*/
+        
+    }//GEN-LAST:event_jButtonConfirmActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
