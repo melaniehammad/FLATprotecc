@@ -195,7 +195,7 @@ public class RegistrationScreen extends javax.swing.JFrame {
             final String hash = pwm.hash(jPasswordField.getPassword().toString(), salt);
             stm = conn.createStatement();
             String sql = "INSERT INTO accounts(id, salt, hash, mail) VALUES ('" 
-                    + new String(Base64.getEncoder().encode(salt)) + "', '" 
+                    + salt + "', '" 
                     + hash + "', '"
                     + jTextFieldEmail.getText() + "')";
             stm.executeUpdate(sql);
