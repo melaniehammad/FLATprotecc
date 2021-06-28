@@ -57,7 +57,7 @@ public class EncryptorDecryptor {
 
             aead = keysetHandle.getPrimitive(Aead.class);
         } catch (GeneralSecurityException ex) {
-            System.err.println("Cannot create primitive, got error: " + ex);
+            System.err.println("GeneralSecurityException, got error: " + ex);
             System.exit(1);
         }
     }
