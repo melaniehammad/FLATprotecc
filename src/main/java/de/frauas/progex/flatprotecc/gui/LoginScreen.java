@@ -160,7 +160,6 @@ public class LoginScreen extends javax.swing.JFrame {
             for(int i=0; i< salt.length ; i++) {
             System.out.print(salt[i]);
             }
-            System.out.println();
             
             String tmp = String.valueOf(jPasswordField.getPassword());
             PasswordManager pwm = new PasswordManager();
@@ -183,7 +182,8 @@ public class LoginScreen extends javax.swing.JFrame {
                                 new OverviewScreen(userId).setVisible(true);
                             }
                         });
-
+                        stm.close();
+                        conn.close();
                         this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
