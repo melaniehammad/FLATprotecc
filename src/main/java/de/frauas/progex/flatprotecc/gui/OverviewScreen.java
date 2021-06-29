@@ -151,7 +151,7 @@ public class OverviewScreen extends javax.swing.JFrame {
 
     private void jButtonChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangePasswordActionPerformed
         // TODO add your handling code here:
-        JFrame frame = this;
+        /*JFrame frame = this;
         frame.setEnabled(false);
         ChangePassword cp;
         cp = new ChangePassword(userId);
@@ -164,7 +164,7 @@ public class OverviewScreen extends javax.swing.JFrame {
             }
         });
         
-        
+        */
     }//GEN-LAST:event_jButtonChangePasswordActionPerformed
 
     private void jButtonAddEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddEntryActionPerformed

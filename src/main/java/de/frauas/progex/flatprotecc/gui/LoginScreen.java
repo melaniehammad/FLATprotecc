@@ -152,10 +152,11 @@ public class LoginScreen extends javax.swing.JFrame {
             stm = conn.createStatement();
             rs = stm.executeQuery("SELECT * FROM accounts WHERE mail='" + jTextFieldEmail.getText() + "';");
             rs.next();
-            System.out.println("pwd = " + rs.getString("pwd") + "    Mail eingabe : " + jTextFieldEmail.getText());
+            System.out.println("hash = " + rs.getString("hash") + "    Mail eingabe : " + jTextFieldEmail.getText());
             
             String tmp = String.valueOf(jPasswordField.getPassword());
-            if(rs.getString("pwd").equals(tmp)) {
+            PasswordManager pwm = new PasswordManager();
+            if(pwm.verifyPassword(tmp, rs.getString("hash"), rs.getBytes("salt"))) { //TODO check email + password
             
                 //send mail and generate validation code
                 MailSender sender = new MailSender();
