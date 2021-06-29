@@ -152,11 +152,17 @@ public class LoginScreen extends javax.swing.JFrame {
             stm = conn.createStatement();
             rs = stm.executeQuery("SELECT * FROM accounts WHERE mail='" + jTextFieldEmail.getText() + "';");
             rs.next();
-            System.out.println("hash = " + rs.getString("hash") + "    Mail eingabe : " + jTextFieldEmail.getText());
+            System.out.print("hash = " + rs.getString("hashValue") + "Mail eingabe : " + jTextFieldEmail.getText());
+            byte[] salt = rs.getBytes("salt");
+            System.out.print("SALTLOGIN =");
+            for(int i=0; i< salt.length ; i++) {
+            System.out.print(salt[i]);
+            }
+            System.out.println();
             
             String tmp = String.valueOf(jPasswordField.getPassword());
             PasswordManager pwm = new PasswordManager();
-            if(pwm.verifyPassword(tmp, rs.getString("hash"), rs.getBytes("salt"))) { //TODO check email + password
+            if(pwm.verifyPassword(tmp, rs.getString("hashValue"), rs.getBytes("salt"))) { //TODO check email + password
             
                 //send mail and generate validation code
                 MailSender sender = new MailSender();
@@ -188,6 +194,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
             
         } catch (SQLException ex){
+            System.out.println("LoginScreen");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());

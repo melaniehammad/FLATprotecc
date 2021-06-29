@@ -177,7 +177,7 @@ public class RegistrationScreen extends javax.swing.JFrame {
                         byte[] salt = pwm.getNewSalt();
                         final String hash = pwm.hash(jPasswordField.getPassword().toString(), salt);
                         stm = conn.createStatement();
-                        String sql = "INSERT INTO accounts(id, salt, hash, mail) VALUES ('"
+                        String sql = "INSERT INTO accounts(salt, hashValue, mail) VALUES ('"
                                 + salt + "', '"
                                 + hash + "', '"
                                 + jTextFieldEmail.getText() + "')";
@@ -187,6 +187,7 @@ public class RegistrationScreen extends javax.swing.JFrame {
                         System.out.println("INSERT complete");
 
                     } catch (SQLException ex) {
+                        System.out.println("RegistrationScreen");
                         System.out.println("SQLException: " + ex.getMessage());
                         System.out.println("SQLState: " + ex.getSQLState());
                     }
