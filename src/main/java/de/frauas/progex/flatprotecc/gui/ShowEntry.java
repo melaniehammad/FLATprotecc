@@ -5,18 +5,46 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+
 /**
  *
  * @author ana
  */
 public class ShowEntry extends javax.swing.JFrame {
     private int userId;
+    private int entryId;
     /**
      * Creates new form ShowEntry
      */
     public ShowEntry(int _userId) {
         initComponents();
         userId = _userId;
+        
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        Statement stm = null;
+        ResultSet rs = null;
+        try{
+            stm = conn.createStatement();
+            rs = stm.executeQuery("SELECT * FROM entry WHERE acc_id=" + userId + " AND id="+ entryId +";");
+            rs.next();
+            jLabelTitleContent.setText(rs.getString("title"));
+            jLabelUsernameContent.setText(rs.getString("username"));
+            jLabelEMailContent.setText(rs.getString("mail"));
+            jLabelCommentContent.setText(rs.getString("com"));
+            //TODO pwd
+            
+        } catch (SQLException ex){
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
     }
 
     /**
@@ -45,7 +73,7 @@ public class ShowEntry extends javax.swing.JFrame {
         jButtonBack = new javax.swing.JButton();
         jButtonDeleteEntry = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 300));
 
         jLabelTitle.setText("Website/Application");
@@ -127,11 +155,21 @@ public class ShowEntry extends javax.swing.JFrame {
         );
 
         jButtonEditEntry.setText("Edit Entry");
+        jButtonEditEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditEntryActionPerformed(evt);
+            }
+        });
 
         jProgressBar1.setMaximum(99);
 
         jButtonBack.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonBack.setText("Back");
+        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBackActionPerformed(evt);
+            }
+        });
 
         jButtonDeleteEntry.setText("Delete Entry");
 
@@ -184,6 +222,23 @@ public class ShowEntry extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonBackActionPerformed
+
+    private void jButtonEditEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditEntryActionPerformed
+        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(new Runnable() { // Open RegistrationScreen
+            public void run() {
+                new EditEntry(userId).setVisible(true);
+            }
+        });
+        
+        this.dispose();
+        
+    }//GEN-LAST:event_jButtonEditEntryActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
