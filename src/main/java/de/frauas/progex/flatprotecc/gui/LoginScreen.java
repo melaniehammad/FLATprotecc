@@ -141,11 +141,13 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
-        System.out.println("############################");
-        System.out.println("Verbindung zu DB erfolgreich!");
-        System.out.println("############################");
         Connect2DB connCreator = new Connect2DB();
         Connection conn = connCreator.StartConnection();
+        if (conn != null) {
+            System.out.println("############################");
+            System.out.println("Verbindung zu DB erfolgreich!");
+            System.out.println("############################");
+        }
         Statement stm = null;
         ResultSet rs = null;
         try {
