@@ -21,7 +21,7 @@ public class PasswordManager {
     public static void main(String[] args){
         PasswordManager pwm = new PasswordManager();
         final String e = "EAEAEAEA";
-        byte[] salt = pwm.getNewSalt();
+        String salt = pwm.getNewSalt();
         System.out.println(pwm.hash(e, salt));
         
         
@@ -30,11 +30,11 @@ public class PasswordManager {
        
     }
 
-    public byte[] getNewSalt() {
+    public String getNewSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
-        return salt;
+        return new String(Base64.getEncoder().encode(salt));
     }
     
     /*public byte[] hash(String password, byte[] salt) {
@@ -52,22 +52,23 @@ public class PasswordManager {
         }
     }*/
     
-    public String hash(String password, byte[] salt) {
+    public String hash(String password, String _salt) {
         final int ITERATIONS = 65536;
+        byte[] salt = Base64.getDecoder().decode(_salt);
 
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, 128);
         SecretKeyFactory factory;
         try {
             factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             byte[] hash = factory.generateSecret(spec).getEncoded();
-            return new String(Base64.getEncoder().encode(salt));
+            return new String(Base64.getEncoder().encode(hash));
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             System.err.println("Error hashing password: " + ex);
             return null;
         }
     }
 
-    public boolean verifyPassword(String providedPassword, byte[] hash, byte[] salt) {
+    public boolean verifyPassword(String providedPassword, String hash, String salt) {
         return hash(providedPassword, salt).equals(hash);
     }
 }
