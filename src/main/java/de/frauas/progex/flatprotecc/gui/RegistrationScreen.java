@@ -170,18 +170,23 @@ public class RegistrationScreen extends javax.swing.JFrame {
 
                 String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
                 // check validation code correct
-                if(validationCode.equals(gen.getValidationCode())) {
-                    
-                    try{
-            
+                if (validationCode.equals(gen.getValidationCode())) {
+
+                    try {
+                        PasswordManager pwm = new PasswordManager();
+                        byte[] salt = pwm.getNewSalt();
+                        final String hash = pwm.hash(jPasswordField.getPassword().toString(), salt);
                         stm = conn.createStatement();
-                        String sql = "INSERT INTO accounts(pwd, mail) VALUES ('" + String.valueOf(jPasswordField.getPassword()) + "', '" + jTextFieldEmail.getText() + "')";
+                        String sql = "INSERT INTO accounts(id, salt, hash, mail) VALUES ('"
+                                + salt + "', '"
+                                + hash + "', '"
+                                + jTextFieldEmail.getText() + "')";
                         stm.executeUpdate(sql);
 
                         System.out.println(sql);
                         System.out.println("INSERT complete");
 
-                    } catch (SQLException ex){
+                    } catch (SQLException ex) {
                         System.out.println("SQLException: " + ex.getMessage());
                         System.out.println("SQLState: " + ex.getSQLState());
                     }
@@ -202,28 +207,6 @@ public class RegistrationScreen extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null,"Password and Confirm Password doesn't match!","Registration failed", JOptionPane.ERROR_MESSAGE);
         }
-            
-        try{
-            PasswordManager pwm = new PasswordManager();
-            byte[] salt = pwm.getNewSalt();
-            final String hash = pwm.hash(jPasswordField.getPassword().toString(), salt);
-            stm = conn.createStatement();
-            String sql = "INSERT INTO accounts(id, salt, hash, mail) VALUES ('" 
-                    + salt + "', '" 
-                    + hash + "', '"
-                    + jTextFieldEmail.getText() + "')";
-            stm.executeUpdate(sql);
-            
-            System.out.println(sql);
-            System.out.println("INSERT complete");
-            
-        } catch (SQLException ex){
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-        }
-            
-        
-        
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
     
