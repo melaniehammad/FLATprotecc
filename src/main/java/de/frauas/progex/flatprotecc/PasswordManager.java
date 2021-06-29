@@ -39,7 +39,6 @@ public class PasswordManager {
     
     public String hash(String password, byte[] salt) {
         final int ITERATIONS = 65536;
-        //byte[] salt = getNewSalt();
 
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, 128);
         SecretKeyFactory factory;
@@ -52,16 +51,10 @@ public class PasswordManager {
             return null;
         }
     }
-    
-    public boolean verifyPassword(String providedPassword, String hash, byte[] salt){
-        System.out.print("pwd = " + providedPassword + "   hashverify = " + hash + "   Return = " + hash(providedPassword, salt).equals(hash));
-        System.out.print("SALT =");
-        for(int i=0; i< salt.length ; i++) {
-         System.out.print(salt[i]);
-        }
-        System.out.println();
-        
-        return hash(providedPassword, salt).equals(hash);
-        //return false;
+
+    public boolean verifyPassword(String providedPassword, String hash, byte[] salt) {
+        String generatedHash = hash(providedPassword, salt);
+        boolean isGoodPassword = generatedHash.equals(hash);
+        return isGoodPassword;
     }
 }
