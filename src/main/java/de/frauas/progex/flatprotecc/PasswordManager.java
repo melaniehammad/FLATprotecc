@@ -37,7 +37,7 @@ public class PasswordManager {
         return salt;
     }
     
-    public byte[] hash(String password, byte[] salt) {
+    /*public byte[] hash(String password, byte[] salt) {
         final int ITERATIONS = 65536;
 
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, 128);
@@ -46,6 +46,21 @@ public class PasswordManager {
             factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             byte[] hash = factory.generateSecret(spec).getEncoded();
             return hash;
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            System.err.println("Error hashing password: " + ex);
+            return null;
+        }
+    }*/
+    
+    public String hash(String password, byte[] salt) {
+        final int ITERATIONS = 65536;
+
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, 128);
+        SecretKeyFactory factory;
+        try {
+            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            byte[] hash = factory.generateSecret(spec).getEncoded();
+            return new String(Base64.getEncoder().encode(salt));
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             System.err.println("Error hashing password: " + ex);
             return null;
