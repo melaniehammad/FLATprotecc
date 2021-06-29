@@ -154,6 +154,7 @@ public class ChangePassword extends javax.swing.JFrame {
                 System.err.println("SQL Exception: " + ex);
             }
         }
+        //'allo lucas 
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
     private void jFieldNewPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFieldNewPasswordActionPerformed
