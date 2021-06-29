@@ -163,7 +163,7 @@ public class LoginScreen extends javax.swing.JFrame {
             
             String tmp = String.valueOf(jPasswordField.getPassword());
             PasswordManager pwm = new PasswordManager();
-            if(pwm.verifyPassword(tmp, rs.getString("hashValue"), rs.getBytes("salt"))) { //TODO check email + password
+            if(pwm.verifyPassword(tmp, rs.getString("hashValue").getBytes(), rs.getBytes("salt"))) { //TODO check email + password
             
                 //send mail and generate validation code
                 MailSender sender = new MailSender();
