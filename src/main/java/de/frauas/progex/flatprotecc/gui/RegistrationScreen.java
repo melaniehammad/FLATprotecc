@@ -174,8 +174,8 @@ public class RegistrationScreen extends javax.swing.JFrame {
 
                     try {
                         PasswordManager pwm = new PasswordManager();
-                        byte[] salt = pwm.getNewSalt();
-                        final byte[] hash = pwm.hash(String.valueOf(jPasswordField.getPassword()), salt);
+                        final String salt = pwm.getNewSalt();
+                        final String hash = pwm.hash(String.valueOf(jPasswordField.getPassword()), salt);
                         stm = conn.createStatement();
                         String sql = "INSERT INTO accounts(salt, hashValue, mail) VALUES ('"
                                 + salt + "', '"

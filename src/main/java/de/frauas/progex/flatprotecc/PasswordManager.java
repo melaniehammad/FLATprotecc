@@ -34,6 +34,7 @@ public class PasswordManager {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
+        System.out.println("New Salt: " + new String(Base64.getEncoder().encode(salt)));
         return new String(Base64.getEncoder().encode(salt));
     }
     
@@ -69,6 +70,11 @@ public class PasswordManager {
     }
 
     public boolean verifyPassword(String providedPassword, String hash, String salt) {
+        System.out.println("Salt:      " + salt);
+        System.out.println("Hash:      " + hash);
+        System.out.println("Password:  " + providedPassword);
+        System.out.println("Hashed PW: " + hash(providedPassword, salt));
+        System.out.println("PASSED:    " + hash(providedPassword, salt).equals(hash));
         return hash(providedPassword, salt).equals(hash);
     }
 }
