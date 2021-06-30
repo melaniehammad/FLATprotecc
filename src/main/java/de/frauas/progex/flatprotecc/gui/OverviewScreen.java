@@ -6,6 +6,14 @@
 package main.java.de.frauas.progex.flatprotecc.gui;
 
 import javax.swing.JFrame;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
 
 /**
  *
@@ -14,12 +22,67 @@ import javax.swing.JFrame;
 public class OverviewScreen extends javax.swing.JFrame {
 
     private int userId;
+    private DefaultTableModel tableModel;
+
     /**
      * Creates new form OverviewScreen
      */
-    public OverviewScreen(int _userId) {
+    public OverviewScreen(int userId) {
         initComponents();
-        userId = _userId;
+        this.userId = userId;
+
+        setLocationRelativeTo(null);
+
+        tableModel = new DefaultTableModel();
+
+        jTable.setModel(tableModel);
+        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        String[] columnNames = {"ID", "Title", "Username", "E-Mail"};
+        tableModel.setColumnIdentifiers(columnNames);
+        //jTable.getColumn("Description").setPreferredWidth(300);
+
+        // Der TableRowSorter wird die Daten des Models sortieren
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>();
+        // Der Sorter muss dem JTable bekannt sein
+        jTable.setRowSorter(sorter);
+        // ... und der Sorter muss wissen, welche Daten er sortieren muss
+        sorter.setModel(tableModel);
+        // damit Spalten nicht verschoben werden können
+        jTable.getTableHeader().setReorderingAllowed(false);
+
+        refreshTable();
+
+        
+
+    }
+    
+    private void refreshTable(){
+        tableModel.setRowCount(0);
+        try {
+            Connect2DB con2db = new Connect2DB();
+            Connection conn = con2db.StartConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM entry WHERE acc_id = " + userId);
+
+            jTable.setDefaultEditor(Object.class, null);
+
+            while (rs.next()) {
+
+                String id = rs.getString("id");
+                String title = rs.getString("title");
+                String username = rs.getString("username");
+                String email = rs.getString("mail");
+
+                tableModel.addRow(new Object[]{id, title, username, email});
+            }
+
+            jTable.getColumnModel().getColumn(0).setMinWidth(0);
+            jTable.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        } catch (Exception e) {
+            System.out.println("Fehler in GUI/MainMenu/EventReadFromDB!");
+            System.out.println("Auszug aus Fehlermeldung: " + e);
+        }
     }
 
     /**
@@ -37,7 +100,7 @@ public class OverviewScreen extends javax.swing.JFrame {
         jButtonChangeEmail = new javax.swing.JButton();
         jButtonChangePassword = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FLATprotecc - Password Manager");
@@ -94,7 +157,7 @@ public class OverviewScreen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -105,7 +168,7 @@ public class OverviewScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,7 +203,7 @@ public class OverviewScreen extends javax.swing.JFrame {
         ChangeEmail ce;
         ce = new ChangeEmail(userId);
         ce.setVisible(true);
-        
+
         ce.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
@@ -151,7 +214,7 @@ public class OverviewScreen extends javax.swing.JFrame {
 
     private void jButtonChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangePasswordActionPerformed
         // TODO add your handling code here:
-        /*JFrame frame = this;
+        JFrame frame = this;
         frame.setEnabled(false);
         ChangePassword cp;
         cp = new ChangePassword(userId);
@@ -164,7 +227,7 @@ public class OverviewScreen extends javax.swing.JFrame {
             }
         });
         
-        */
+         
     }//GEN-LAST:event_jButtonChangePasswordActionPerformed
 
     private void jButtonAddEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddEntryActionPerformed
@@ -174,15 +237,16 @@ public class OverviewScreen extends javax.swing.JFrame {
         AddEntry ae;
         ae = new AddEntry(userId);
         ae.setVisible(true);
-        
+
         ae.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                 frame.setEnabled(true);
+                frame.toFront();
+                refreshTable();
             }
         });
     }//GEN-LAST:event_jButtonAddEntryActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -192,6 +256,6 @@ public class OverviewScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFLATprotecc;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 }

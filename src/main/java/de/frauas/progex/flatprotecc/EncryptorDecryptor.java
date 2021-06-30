@@ -10,6 +10,7 @@ import com.google.crypto.tink.aead.AeadConfig;
 import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Base64;
 
 /**
  *
@@ -85,12 +86,13 @@ public class EncryptorDecryptor {
     }
 
     public String encryptString(String plaintext) {
-        String cipherString = new String(encrypt(plaintext.getBytes()));
+        String cipherString = new String(Base64.getEncoder().encode(encrypt(plaintext.getBytes())));
         return cipherString;
     }
 
     public String decryptString(String ciphertext) {
-        String plaintext = new String(decrypt(ciphertext.getBytes()));
+        byte[] ciphertext_ = Base64.getDecoder().decode(ciphertext.getBytes());
+        String plaintext = new String(decrypt(ciphertext_));
         return plaintext;
     }
 }

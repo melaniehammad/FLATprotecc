@@ -5,12 +5,14 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+import main.java.de.frauas.progex.flatprotecc.EncryptorDecryptor;
 import main.java.de.frauas.progex.flatprotecc.MailSender;
 import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
 
@@ -19,7 +21,9 @@ import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
  * @author ana
  */
 public class AddEntry extends javax.swing.JFrame {
+
     private int userId;
+
     /**
      * Creates new form AddEntry
      */
@@ -203,33 +207,41 @@ public class AddEntry extends javax.swing.JFrame {
         // TODO add your handling code here:
         Connect2DB connCreator = new Connect2DB();
         Connection conn = connCreator.StartConnection();
-        Statement stm = null;
-        ResultSet rs = null;
-        try {
-            String password = String.valueOf(jPasswordField.getPassword());
-            String passwordConfirm = String.valueOf(jPasswordFieldConf.getPassword());
-            if(password.equals(passwordConfirm)) {
-                if(jTextEmail.getText().equals("") && jTextUsername.getText().equals("")) {
-                    stm = conn.createStatement();
-                    String sql = "INSERT INTO entry (acc_id, title, username, pwd, mail, comment)" +
-                                 "VALUES (" + userId + ",'" + jTextFieldTitle.getText() + "','" +
-                                 jTextUsername.getText() + "','"+ String.valueOf(jPasswordField.getPassword()) +"','"+
-                                 jTextEmail.getText() + "','" + jTextComment.getText() +"');";
-                    stm.executeUpdate(sql);
-
-                    System.out.println(sql);
-                    System.out.println("UPDATE complete");
-                } else {
-                JOptionPane.showMessageDialog(null,"Please enter a username or Email","Incomplete data", JOptionPane.ERROR_MESSAGE);
-                } 
-            } else {
-                JOptionPane.showMessageDialog(null,"Password does not match with confirmed password!","Password Change", JOptionPane.ERROR_MESSAGE);
-            }              
-        } catch (SQLException ex){
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+        if (conn != null) {
+            System.out.println("#####ADD NEW ENTRY#####");
+            System.out.println("#connection successful#");
+            System.out.println("#######################");
         }
+
+        String password = String.valueOf(jPasswordField.getPassword());
+        String passwordConfirm = String.valueOf(jPasswordFieldConf.getPassword());
+
+        if (!password.equals(passwordConfirm)) {
+            JOptionPane.showMessageDialog(null, "Password does not match with confirmed password!", "Password Check", JOptionPane.ERROR_MESSAGE);
+        } else if (jTextEmail.getText().equals("") && jTextUsername.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter a username or Email", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        } else if (jTextFieldTitle.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter a platform or service name", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                Statement stm = conn.createStatement();
+                EncryptorDecryptor ed = new EncryptorDecryptor();
+                String sql = "INSERT INTO entry (acc_id, title, username, pwd, mail, com)"
+                        + "VALUES (" + userId + ",'" + jTextFieldTitle.getText() + "','"
+                        + jTextUsername.getText() + "','" + ed.encryptString(password) + "','"
+                        + jTextEmail.getText() + "','" + jTextComment.getText() + "');";
+                System.out.println(sql);
+                stm.executeUpdate(sql);
+                System.out.println("INSERT complete");
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }
+
+
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
 
