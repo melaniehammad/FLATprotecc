@@ -222,7 +222,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEditEntryActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+        <Component class="main.java.de.frauas.progex.flatprotecc.PasswordBar" name="jProgressBar1">
           <Properties>
             <Property name="maximum" type="int" value="99"/>
           </Properties>

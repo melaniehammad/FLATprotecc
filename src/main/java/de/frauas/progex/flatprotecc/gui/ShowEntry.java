@@ -44,6 +44,7 @@ public class ShowEntry extends javax.swing.JFrame {
             jLabelCommentContent.setText(rs.getString("com"));
             String cipher = rs.getString("pwd");
             jLabelPasswordContent.setText(decryptor.decryptString(cipher));
+            jProgressBar1.setSecurityLevel(jLabelPasswordContent.getText());
 
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
@@ -74,7 +75,7 @@ public class ShowEntry extends javax.swing.JFrame {
         jLabelCommentContent = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButtonEditEntry = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        jProgressBar1 = new main.java.de.frauas.progex.flatprotecc.PasswordBar();
         jButtonBack = new javax.swing.JButton();
         jButtonDeleteEntry = new javax.swing.JButton();
 
@@ -285,6 +286,6 @@ public class ShowEntry extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelUsernameContent;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JProgressBar jProgressBar1;
+    private main.java.de.frauas.progex.flatprotecc.PasswordBar jProgressBar1;
     // End of variables declaration//GEN-END:variables
 }
