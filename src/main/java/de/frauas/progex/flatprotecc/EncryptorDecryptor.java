@@ -19,13 +19,6 @@ import java.util.Base64;
 public class EncryptorDecryptor {
 
     private Aead aead;
-    
-    //Main method for testing purposes only.
-    public static void main(String[] args) {
-        String eee = "Encrypt this!";
-        EncryptorDecryptor enc = new EncryptorDecryptor();
-        System.out.println(new String(enc.decrypt(enc.encrypt(eee.getBytes()))));
-    }
 
     public EncryptorDecryptor() {
         final String keysetFilename = "keyset.json";
