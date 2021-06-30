@@ -80,6 +80,7 @@ public class ChangeEmail extends javax.swing.JFrame {
             }
         });
 
+        jButtonCancel.setBackground(new java.awt.Color(255, 0, 0));
         jButtonCancel.setText("Cancel");
         jButtonCancel.setMaximumSize(new java.awt.Dimension(77, 23));
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
