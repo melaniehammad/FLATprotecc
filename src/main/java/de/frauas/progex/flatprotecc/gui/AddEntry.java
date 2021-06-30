@@ -149,6 +149,7 @@ public class AddEntry extends javax.swing.JFrame {
         jLabelAddNewEntry.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelAddNewEntry.setText("Add New Entry");
 
+        jButtonCancel.setBackground(new java.awt.Color(255, 0, 0));
         jButtonCancel.setText("Cancel");
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +223,11 @@ public class AddEntry extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter a username or Email", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         } else if (jTextFieldTitle.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please enter a platform or service name", "Incomplete data", JOptionPane.ERROR_MESSAGE);
-        } else {
+        } else if (jTextFieldTitle.getText().length() >= 100) {
+            JOptionPane.showMessageDialog(null, "Please enter a platform or service name, that has less than 100 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        } else if (jTextComment.getText().length() >= 400) {
+            JOptionPane.showMessageDialog(null, "Comment cannot be longer than 400 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        }else {
             try {
                 Statement stm = conn.createStatement();
                 EncryptorDecryptor ed = new EncryptorDecryptor();
