@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -50,13 +51,14 @@ public class OverviewScreen extends javax.swing.JFrame {
         // damit Spalten nicht verschoben werden können
         jTable.getTableHeader().setReorderingAllowed(false);
 
+        jTable.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable.getColumnModel().getColumn(0).setMaxWidth(0);
+
         refreshTable();
 
-        
-
     }
-    
-    private void refreshTable(){
+
+    private void refreshTable() {
         tableModel.setRowCount(0);
         try {
             Connect2DB con2db = new Connect2DB();
@@ -75,9 +77,6 @@ public class OverviewScreen extends javax.swing.JFrame {
 
                 tableModel.addRow(new Object[]{id, title, username, email});
             }
-
-            jTable.getColumnModel().getColumn(0).setMinWidth(0);
-            jTable.getColumnModel().getColumn(0).setMaxWidth(0);
 
         } catch (Exception e) {
             System.out.println("Fehler in GUI/MainMenu/EventReadFromDB!");
@@ -168,6 +167,11 @@ public class OverviewScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -208,6 +212,7 @@ public class OverviewScreen extends javax.swing.JFrame {
             @Override
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                 frame.setEnabled(true);
+                frame.toFront();
             }
         });
     }//GEN-LAST:event_jButtonChangeEmailActionPerformed
@@ -219,15 +224,16 @@ public class OverviewScreen extends javax.swing.JFrame {
         ChangePassword cp;
         cp = new ChangePassword(userId);
         cp.setVisible(true);
-        
+
         cp.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                 frame.setEnabled(true);
+                frame.toFront();
             }
         });
-        
-         
+
+
     }//GEN-LAST:event_jButtonChangePasswordActionPerformed
 
     private void jButtonAddEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddEntryActionPerformed
@@ -247,6 +253,27 @@ public class OverviewScreen extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_jButtonAddEntryActionPerformed
+
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        JTable table = (JTable) evt.getSource();
+        int row = table.rowAtPoint(evt.getPoint());
+        System.out.println(row + "selected id=" + table.getValueAt(row, 0));
+
+        JFrame frame = this;
+        frame.setEnabled(false);
+        ShowEntry se = new ShowEntry(userId, Integer.valueOf((String) table.getValueAt(row, 0)));
+        se.setVisible(true);
+
+        se.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                frame.setEnabled(true);
+                frame.toFront();
+                refreshTable();
+            }
+        });
+        
+    }//GEN-LAST:event_jTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+import main.java.de.frauas.progex.flatprotecc.EncryptorDecryptor;
 
 /**
  *
@@ -22,23 +23,23 @@ public class ShowEntry extends javax.swing.JFrame {
     /**
      * Creates new form ShowEntry
      */
-    public ShowEntry(int _userId) {
+    public ShowEntry(int userId, int entryId) {
         initComponents();
-        userId = _userId;
-        
+        this.userId = userId;
+        this.entryId = entryId;
+        EncryptorDecryptor decryptor = new EncryptorDecryptor();
         Connect2DB connCreator = new Connect2DB();
         Connection conn = connCreator.StartConnection();
-        Statement stm = null;
-        ResultSet rs = null;
         try{
-            stm = conn.createStatement();
-            rs = stm.executeQuery("SELECT * FROM entry WHERE acc_id=" + userId + " AND id="+ entryId +";");
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM entry WHERE acc_id=" + userId + " AND id="+ entryId +";");
             rs.next();
             jLabelTitleContent.setText(rs.getString("title"));
             jLabelUsernameContent.setText(rs.getString("username"));
             jLabelEMailContent.setText(rs.getString("mail"));
             jLabelCommentContent.setText(rs.getString("com"));
-            //TODO pwd
+            String cipher = rs.getString("pwd");
+            jLabelPasswordContent.setText(decryptor.decryptString(cipher));
             
         } catch (SQLException ex){
             System.out.println("SQLException: " + ex.getMessage());
@@ -171,6 +172,7 @@ public class ShowEntry extends javax.swing.JFrame {
             }
         });
 
+        jButtonDeleteEntry.setBackground(new java.awt.Color(255, 0, 0));
         jButtonDeleteEntry.setText("Delete Entry");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
