@@ -55,7 +55,7 @@ public class AddEntry extends javax.swing.JFrame {
         jPasswordField = new javax.swing.JPasswordField();
         jPasswordFieldConf = new javax.swing.JPasswordField();
         jButtonConfirm = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        jProgressBar1 = new main.java.de.frauas.progex.flatprotecc.PasswordBar();
         jLabelAddNewEntry = new javax.swing.JLabel();
         jButtonCancel = new javax.swing.JButton();
 
@@ -73,6 +73,12 @@ public class AddEntry extends javax.swing.JFrame {
         jLabelConfirmLabel.setText("Confirm Password");
 
         jLabelComment.setText("Comment");
+
+        jPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPasswordFieldKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -249,6 +255,10 @@ public class AddEntry extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
+    private void jPasswordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordFieldKeyReleased
+        jProgressBar1.setSecurityLevel(jPasswordField.getText());
+    }//GEN-LAST:event_jPasswordFieldKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancel;
@@ -263,7 +273,7 @@ public class AddEntry extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JPasswordField jPasswordFieldConf;
-    private javax.swing.JProgressBar jProgressBar1;
+    private main.java.de.frauas.progex.flatprotecc.PasswordBar jProgressBar1;
     private javax.swing.JTextField jTextComment;
     private javax.swing.JTextField jTextEmail;
     private javax.swing.JTextField jTextFieldTitle;

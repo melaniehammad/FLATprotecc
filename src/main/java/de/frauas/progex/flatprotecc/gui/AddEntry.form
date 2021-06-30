@@ -194,6 +194,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jPasswordFieldKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordFieldConf">
         </Component>
@@ -210,7 +213,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConfirmActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+    <Component class="main.java.de.frauas.progex.flatprotecc.PasswordBar" name="jProgressBar1">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelAddNewEntry">
       <Properties>
