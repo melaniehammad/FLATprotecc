@@ -10,9 +10,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+import main.java.de.frauas.progex.flatprotecc.EncryptorDecryptor;
 import main.java.de.frauas.progex.flatprotecc.MailSender;
+import main.java.de.frauas.progex.flatprotecc.PasswordManager;
 import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
 
 /**
@@ -23,15 +27,17 @@ public class ChangeEmail extends javax.swing.JFrame {
 
     private int userId;
     private OverviewScreen parent;
+
     /**
      * Creates new form ChangeEmail
+     *
      * @param _userID ID of the logged in user
      */
     public ChangeEmail(int _userId) {
         initComponents();
         userId = _userId;
         //parent = _parent;
-        
+
     }
 
     /**
@@ -151,58 +157,46 @@ public class ChangeEmail extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
-        // TODO add your handling code here:
-        Connect2DB connCreator = new Connect2DB();
-        Connection conn = connCreator.StartConnection();
-        Statement stm = null;
-        ResultSet rs = null;
+        EncryptorDecryptor decryptor = new EncryptorDecryptor();
+        String tmp = new String(jPasswordFieldPassword.getPassword());
+        PasswordManager pwm = new PasswordManager();
+        MailSender sender = new MailSender();
+        ValidationCodeGenerator gen = new ValidationCodeGenerator();
+        gen.generateNewValidationCode();
+
         try {
-            stm = conn.createStatement();
-            rs = stm.executeQuery("SELECT * FROM accounts WHERE id='" + userId + "';");
+            Connect2DB connCreator = new Connect2DB();
+            Connection conn = connCreator.StartConnection();
+            
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM accounts WHERE id='" + userId + "';");
             rs.next();
-            String tmp = String.valueOf(jPasswordFieldPassword.getPassword());
-            if(jTextFieldNewEmail.getText().equals(jTextFieldConfNewEmail.getText())) {
-                if(rs.getString("pwd").equals(tmp)) {
-                   MailSender sender = new MailSender();
-                   ValidationCodeGenerator gen = new ValidationCodeGenerator();
 
-                   gen.generateNewValidationCode();
+            if (!jTextFieldNewEmail.getText().equals(jTextFieldConfNewEmail.getText())) {       //E-Mail match
+                JOptionPane.showMessageDialog(null, "Email does not match with confirmed email!", "Email Change", JOptionPane.ERROR_MESSAGE);
+            } else if (!pwm.verifyPassword(tmp, rs.getString("hashValue"), rs.getString("salt"))) {      //Verify Password
+                JOptionPane.showMessageDialog(null, "Password wrong! Please try again.", "Authentification failed", JOptionPane.ERROR_MESSAGE);
+            } else if (sender.sendValidationCode(jTextFieldNewEmail.getText(), gen.getValidationCode())) {      //2 Factor Auth
+                String validationCode = JOptionPane.showInputDialog(null, "Enter Validation-Code:", "2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
+                if (validationCode.equals(gen.getValidationCode())) {
 
-                   if(sender.sendValidationCode(jTextFieldNewEmail.getText(), gen.getValidationCode())) {
+                    stm = conn.createStatement();
+                    String sql = "UPDATE accounts SET mail = '" + jTextFieldNewEmail.getText() + "' WHERE id = " + userId + ";";
+                    System.out.println(sql);
+                    
+                    stm.executeUpdate(sql);
+                    System.out.println("UPDATE complete");
 
-                       String validationCode = JOptionPane.showInputDialog(null,"Enter Validation-Code:","2-Factor-Authentification", JOptionPane.QUESTION_MESSAGE);
-                       // check validation code correct
-                       
-                       if(validationCode.equals(gen.getValidationCode())) {
-                           
-                            stm = conn.createStatement();
-                            String sql = "UPDATE accounts SET mail = '" + jTextFieldNewEmail.getText() +"' WHERE id = " + userId + ";";
-                            stm.executeUpdate(sql);
-
-                            System.out.println(sql);
-                            System.out.println("UPDATE complete");
-                           
-                           
-                           JOptionPane.showMessageDialog(null,"Email changed sucessfully!","Change Email", JOptionPane.INFORMATION_MESSAGE);
-                           this.dispose();
-                       } else {
-                           JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
-                       }
-                   } else {
-                       JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
-                   }
+                    JOptionPane.showMessageDialog(null, "Email changed sucessfully!", "Change Email", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null,"Password wrong! Please try again.","Authentification failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Wrong Code! Please try again.", "2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null,"Email does not match with confirmed email!","Email Change", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException ex){
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+        } catch (SQLException ex) {
+            System.out.println("CHANGE EMAIL SQL EXCEPTION");
+            System.out.println(ex);
         }
-        
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
