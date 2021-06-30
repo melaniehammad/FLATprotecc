@@ -50,7 +50,7 @@ public class ChangePassword extends javax.swing.JFrame {
         jButtonConfirm = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(300, 250));
 
         jLabelOldPassword.setText("Old Password");
@@ -195,7 +195,6 @@ public class ChangePassword extends javax.swing.JFrame {
 
     private void jFieldNewPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFieldNewPasswordActionPerformed
         // TODO add your handling code here:
-        this.dispose();
     }//GEN-LAST:event_jFieldNewPasswordActionPerformed
 
 
