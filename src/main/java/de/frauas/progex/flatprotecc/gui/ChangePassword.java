@@ -145,9 +145,9 @@ public class ChangePassword extends javax.swing.JFrame {
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
         Connect2DB connCreator = new Connect2DB();
         Connection conn = connCreator.StartConnection();
-        if (jFieldNewPassword.getText().equals(jFieldNewPasswordConf.getText())) {
+        if (jFieldNewPassword.getPassword().equals(jFieldNewPasswordConf.getPassword())) {
             try {
-                final String sql = "UPDATE accounts SET pwd=" + jFieldNewPassword.getText() + "WHERE id=" + userId + ";";
+                final String sql = "UPDATE accounts SET pwd=" + jFieldNewPassword.getPassword() + "WHERE id=" + userId + ";";
                 Statement statement = conn.createStatement();
                 statement.executeUpdate(sql);
             } catch (SQLException ex) {
