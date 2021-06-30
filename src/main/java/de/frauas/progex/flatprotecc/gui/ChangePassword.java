@@ -164,7 +164,7 @@ public class ChangePassword extends javax.swing.JFrame {
             ResultSet rs = stm.executeQuery("SELECT * FROM accounts WHERE id='" + userId + "';");
             rs.next();
 
-            if (!jFieldNewPassword.getPassword().equals(jFieldNewPasswordConf.getPassword())) {       //New Password match
+            if (!String.valueOf(jFieldNewPassword.getPassword()).equals(String.valueOf(jFieldNewPasswordConf.getPassword()))) {       //New Password match
                 JOptionPane.showMessageDialog(null, "Email does not match with confirmed email!", "Email Change", JOptionPane.ERROR_MESSAGE);
             } else if (!pwm.verifyPassword(tmp, rs.getString("hashValue"), rs.getString("salt"))) {      //Verify Password
                 JOptionPane.showMessageDialog(null, "Password wrong! Please try again.", "Authentification failed", JOptionPane.ERROR_MESSAGE);
@@ -174,7 +174,7 @@ public class ChangePassword extends javax.swing.JFrame {
                     String salt = pwm.getNewSalt();
                     stm = conn.createStatement();
                     String sql = "UPDATE accounts SET salt = '" + salt
-                            + "' SET hashValue = " + pwm.hash(new String(jFieldNewPassword.getPassword()), salt)
+                            + "' , hashValue = '" + pwm.hash(new String(jFieldNewPassword.getPassword()), salt)
                             + "' WHERE id = " + userId + ";";
                     System.out.println(sql);
                     
