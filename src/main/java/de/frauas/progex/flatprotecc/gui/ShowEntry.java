@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import main.java.de.frauas.progex.flatprotecc.Connect2DB;
 import main.java.de.frauas.progex.flatprotecc.EncryptorDecryptor;
@@ -18,8 +20,10 @@ import main.java.de.frauas.progex.flatprotecc.EncryptorDecryptor;
  * @author ana
  */
 public class ShowEntry extends javax.swing.JFrame {
+
     private int userId;
     private int entryId;
+
     /**
      * Creates new form ShowEntry
      */
@@ -30,9 +34,9 @@ public class ShowEntry extends javax.swing.JFrame {
         EncryptorDecryptor decryptor = new EncryptorDecryptor();
         Connect2DB connCreator = new Connect2DB();
         Connection conn = connCreator.StartConnection();
-        try{
+        try {
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM entry WHERE acc_id=" + userId + " AND id="+ entryId +";");
+            ResultSet rs = stm.executeQuery("SELECT * FROM entry WHERE acc_id=" + userId + " AND id=" + entryId + ";");
             rs.next();
             jLabelTitleContent.setText(rs.getString("title"));
             jLabelUsernameContent.setText(rs.getString("username"));
@@ -40,8 +44,8 @@ public class ShowEntry extends javax.swing.JFrame {
             jLabelCommentContent.setText(rs.getString("com"));
             String cipher = rs.getString("pwd");
             jLabelPasswordContent.setText(decryptor.decryptString(cipher));
-            
-        } catch (SQLException ex){
+
+        } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
@@ -174,6 +178,11 @@ public class ShowEntry extends javax.swing.JFrame {
 
         jButtonDeleteEntry.setBackground(new java.awt.Color(255, 0, 0));
         jButtonDeleteEntry.setText("Delete Entry");
+        jButtonDeleteEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteEntryActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -234,13 +243,30 @@ public class ShowEntry extends javax.swing.JFrame {
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(new Runnable() { // Open RegistrationScreen
             public void run() {
-                new EditEntry(userId).setVisible(true);
+                new EditEntry(userId, entryId).setVisible(true);
             }
         });
-        
+
         this.dispose();
-        
+
     }//GEN-LAST:event_jButtonEditEntryActionPerformed
+
+    private void jButtonDeleteEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteEntryActionPerformed
+        int certrainty = JOptionPane.showConfirmDialog(this, "Delete Entry", "Are you sure you want to delete this entry?\nThis cannot be undone.", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (certrainty == JOptionPane.YES_OPTION) {
+            Connect2DB connCreator = new Connect2DB();
+            Connection conn = connCreator.StartConnection();
+            try {
+                Statement stm = conn.createStatement();
+                String sql = "DELETE FROM entry WHERE id=" + entryId;
+                System.out.println(sql);
+                stm.executeUpdate(sql);
+            } catch (SQLException ex) {
+                Logger.getLogger(ShowEntry.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButtonDeleteEntryActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

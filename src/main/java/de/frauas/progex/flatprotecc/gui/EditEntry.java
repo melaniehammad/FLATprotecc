@@ -5,19 +5,50 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+import main.java.de.frauas.progex.flatprotecc.EncryptorDecryptor;
+
 /**
  *
  * @author ana
  */
 public class EditEntry extends javax.swing.JFrame {
     
-    private int userId;
+    private final int userId;
+    private final int entryId;
     /**
      * Creates new form EditEntry
      */
-    public EditEntry(int _userId) {
+    public EditEntry(int userId, int entryId) {
         initComponents();
-        userId = _userId;
+        this.userId = userId;
+        this.entryId = entryId;
+        
+        EncryptorDecryptor decryptor = new EncryptorDecryptor();
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM entry WHERE acc_id=" + userId + " AND id=" + entryId + ";");
+            rs.next();
+            jTextFieldTitle.setText(rs.getString("title"));
+            jTextUsername.setText(rs.getString("username"));
+            jTextEmail.setText(rs.getString("mail"));
+            jTextComment.setText(rs.getString("com"));
+            String cipher = rs.getString("pwd");
+            jTextFieldPw.setText(decryptor.decryptString(cipher));
+            jTextFieldPwConf.setText(decryptor.decryptString(cipher));
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
     }
 
     /**
@@ -42,8 +73,8 @@ public class EditEntry extends javax.swing.JFrame {
         jLabelConfirmLabel = new javax.swing.JLabel();
         jTextComment = new javax.swing.JTextField();
         jLabelComment = new javax.swing.JLabel();
-        jPasswordField = new javax.swing.JPasswordField();
-        jPasswordFieldConf = new javax.swing.JPasswordField();
+        jTextFieldPwConf = new javax.swing.JTextField();
+        jTextFieldPw = new javax.swing.JTextField();
         jProgressBar1 = new javax.swing.JProgressBar();
         jButtonConfirm = new javax.swing.JButton();
         jButtonCancel1 = new javax.swing.JButton();
@@ -95,11 +126,11 @@ public class EditEntry extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPasswordField))
+                        .addComponent(jTextFieldPw))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelConfirmLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPasswordFieldConf)))
+                        .addComponent(jTextFieldPwConf)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -119,12 +150,12 @@ public class EditEntry extends javax.swing.JFrame {
                     .addComponent(jLabelEmail))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelPassword))
+                    .addComponent(jLabelPassword)
+                    .addComponent(jTextFieldPw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordFieldConf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelConfirmLabel))
+                    .addComponent(jLabelConfirmLabel)
+                    .addComponent(jTextFieldPwConf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextComment, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
@@ -134,6 +165,11 @@ public class EditEntry extends javax.swing.JFrame {
 
         jButtonConfirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonConfirm.setText("Confirm");
+        jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmActionPerformed(evt);
+            }
+        });
 
         jButtonCancel1.setBackground(new java.awt.Color(255, 51, 0));
         jButtonCancel1.setText("Cancel");
@@ -190,6 +226,53 @@ public class EditEntry extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButtonCancel1ActionPerformed
 
+    private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        if (conn != null) {
+            System.out.println("####EDIT NEW ENTRY#####");
+            System.out.println("#connection successful#");
+            System.out.println("#######################");
+        }
+
+        String password = String.valueOf(jTextFieldPw.getText());
+        String passwordConfirm = String.valueOf(jTextFieldPwConf.getText());
+
+        if (!password.equals(passwordConfirm)) {
+            JOptionPane.showMessageDialog(null, "Password does not match with confirmed password!", "Password Check", JOptionPane.ERROR_MESSAGE);
+        } else if (jTextEmail.getText().equals("") && jTextUsername.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter a username or Email", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        } else if (jTextFieldTitle.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter a platform or service name", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        } else if (jTextFieldTitle.getText().length() >= 100) {
+            JOptionPane.showMessageDialog(null, "Please enter a platform or service name, that has less than 100 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        } else if (jTextComment.getText().length() >= 400) {
+            JOptionPane.showMessageDialog(null, "Comment cannot be longer than 400 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        }else {
+            try {
+                Statement stm = conn.createStatement();
+                EncryptorDecryptor ed = new EncryptorDecryptor();
+                
+                String sql = "UPDATE entry SET "
+                        + "title='" + jTextFieldTitle.getText()
+                        + "', username='" + jTextUsername.getText()
+                        + "', pwd='" + ed.encryptString(password)
+                        + "', mail='" + jTextEmail.getText()
+                        + "', com='" + jTextComment.getText()
+                        + "' WHERE id =" + entryId;
+
+                System.out.println(sql);
+                stm.executeUpdate(sql);
+                System.out.println("INSERT complete");
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }
+    }//GEN-LAST:event_jButtonConfirmActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancel;
@@ -203,11 +286,11 @@ public class EditEntry extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JLabel jLabelUsername;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField;
-    private javax.swing.JPasswordField jPasswordFieldConf;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JTextField jTextComment;
     private javax.swing.JTextField jTextEmail;
+    private javax.swing.JTextField jTextFieldPw;
+    private javax.swing.JTextField jTextFieldPwConf;
     private javax.swing.JTextField jTextFieldTitle;
     private javax.swing.JTextField jTextUsername;
     // End of variables declaration//GEN-END:variables
