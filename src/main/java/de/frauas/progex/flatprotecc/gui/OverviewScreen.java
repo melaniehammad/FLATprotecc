@@ -51,7 +51,7 @@ public class OverviewScreen extends javax.swing.JFrame {
         jTable.getTableHeader().setReorderingAllowed(false);
 
         refreshTable();
-        
+
         
 
     }
