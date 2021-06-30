@@ -50,7 +50,7 @@ public class EditEntry extends javax.swing.JFrame {
 
         jButtonCancel.setText("Cancel");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 400));
 
         jLabelEditEntry.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -135,7 +135,13 @@ public class EditEntry extends javax.swing.JFrame {
         jButtonConfirm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonConfirm.setText("Confirm");
 
+        jButtonCancel1.setBackground(new java.awt.Color(255, 51, 0));
         jButtonCancel1.setText("Cancel");
+        jButtonCancel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancel1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,6 +184,11 @@ public class EditEntry extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancel1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancel1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
