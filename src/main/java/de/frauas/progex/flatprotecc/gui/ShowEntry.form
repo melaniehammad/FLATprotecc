@@ -170,8 +170,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPasswordContent">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Password Content"/>
+            <Property name="text" type="java.lang.String" value="&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;"/>
+            <Property name="toolTipText" type="java.lang.String" value="Click to reveal password"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelPasswordContentMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCommentContent">
           <Properties>

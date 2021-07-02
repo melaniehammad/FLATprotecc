@@ -45,7 +45,7 @@ public class OverviewScreen extends javax.swing.JFrame {
 
         jTable.setModel(tableModel);
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        String[] columnNames = {"ID", "Title", "Username", "E-Mail"};
+        String[] columnNames = {"ID", "Title", "Username", "E-Mail", "Comment"};
         tableModel.setColumnIdentifiers(columnNames);
         //jTable.getColumn("Description").setPreferredWidth(300);
 
@@ -81,8 +81,9 @@ public class OverviewScreen extends javax.swing.JFrame {
                 String title = rs.getString("title");
                 String username = rs.getString("username");
                 String email = rs.getString("mail");
+                String com = rs.getString("com");
 
-                tableModel.addRow(new Object[]{id, title, username, email});
+                tableModel.addRow(new Object[]{id, title, username, email, com});
             }
 
         } catch (Exception e) {

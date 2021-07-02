@@ -49,8 +49,8 @@ public class ShowEntry extends javax.swing.JFrame {
             jLabelEMailContent.setText(rs.getString("mail"));
             jLabelCommentContent.setText(rs.getString("com"));
             String cipher = rs.getString("pwd");
-            jLabelPasswordContent.setText(decryptor.decryptString(cipher));
-            jProgressBar1.setSecurityLevel(jLabelPasswordContent.getText());
+            //jLabelPasswordContent.setText(decryptor.decryptString(cipher));
+            jProgressBar1.setSecurityLevel(decryptor.decryptString(cipher));
 
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
@@ -104,7 +104,13 @@ public class ShowEntry extends javax.swing.JFrame {
 
         jLabelEMailContent.setText("E-Mail Content");
 
-        jLabelPasswordContent.setText("Password Content");
+		jLabelPasswordContent.setText("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+        jLabelPasswordContent.setToolTipText("Click to reveal password");
+        jLabelPasswordContent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelPasswordContentMouseClicked(evt);
+            }
+        });
 
         jLabelCommentContent.setText("Comment Content");
 
@@ -259,7 +265,7 @@ public class ShowEntry extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditEntryActionPerformed
 
     private void jButtonDeleteEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteEntryActionPerformed
-        int certrainty = JOptionPane.showConfirmDialog(this, "Delete Entry", "Are you sure you want to delete this entry?\nThis cannot be undone.", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int certrainty = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this entry?\nThis cannot be undone.", "Delete Entry", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (certrainty == JOptionPane.YES_OPTION) {
             Connect2DB connCreator = new Connect2DB();
             Connection conn = connCreator.StartConnection();
@@ -274,6 +280,22 @@ public class ShowEntry extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jButtonDeleteEntryActionPerformed
+
+    private void jLabelPasswordContentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPasswordContentMouseClicked
+        EncryptorDecryptor decryptor = new EncryptorDecryptor();
+        Connect2DB connCreator = new Connect2DB();
+        Connection conn = connCreator.StartConnection();
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT * FROM entry WHERE acc_id=" + userId + " AND id=" + entryId + ";");
+            rs.next();
+            jLabelPasswordContent.setText(decryptor.decryptString(rs.getString("pwd")));
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+    }//GEN-LAST:event_jLabelPasswordContentMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
