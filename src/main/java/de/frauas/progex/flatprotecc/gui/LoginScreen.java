@@ -151,7 +151,7 @@ public class LoginScreen extends javax.swing.JFrame {
         Connect2DB connCreator = new Connect2DB();
         Connection conn = connCreator.StartConnection();
         if (conn != null) {
-            System.out.println("############################");
+            System.out.println("###########LOGIN############");
             System.out.println("Verbindung zu DB erfolgreich!");
             System.out.println("############################");
         }
@@ -164,7 +164,7 @@ public class LoginScreen extends javax.swing.JFrame {
             
             String tmp = String.valueOf(jPasswordField.getPassword());
             PasswordManager pwm = new PasswordManager();
-            if(pwm.verifyPassword(tmp, rs.getString("hashValue"), rs.getString("salt"))) { //TODO check email + password
+            if(pwm.verifyPassword(tmp, rs.getString("hashValue"), rs.getString("salt"))) {
             
                 //send mail and generate validation code
                 MailSender sender = new MailSender();
@@ -178,11 +178,10 @@ public class LoginScreen extends javax.swing.JFrame {
                     // check validation code correct
                     int userId = rs.getInt("id");
                     if(validationCode.equals(gen.getValidationCode())) {
-                        java.awt.EventQueue.invokeLater(new Runnable() { // Open OverviewScreen
-                            public void run() {
-                                new OverviewScreen(userId).setVisible(true);
-                            }
-                        });
+                        java.awt.EventQueue.invokeLater(() -> {
+                            new OverviewScreen(userId).setVisible(true);
+                        } // Open OverviewScreen
+                        );
                         stm.close();
                         conn.close();
                         this.dispose();
@@ -209,11 +208,10 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void jButtonCreateNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateNewAccountActionPerformed
         // TODO add your handling code here:
-        java.awt.EventQueue.invokeLater(new Runnable() { // Open RegistrationScreen
-            public void run() {
-                new RegistrationScreen().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> {
+            new RegistrationScreen().setVisible(true);
+        } // Open RegistrationScreen
+        );
         
         this.dispose();
         

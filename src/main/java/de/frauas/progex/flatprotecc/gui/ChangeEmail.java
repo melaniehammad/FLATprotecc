@@ -7,13 +7,10 @@ package main.java.de.frauas.progex.flatprotecc.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import main.java.de.frauas.progex.flatprotecc.Connect2DB;
 import main.java.de.frauas.progex.flatprotecc.EncryptorDecryptor;
@@ -33,7 +30,7 @@ public class ChangeEmail extends javax.swing.JFrame {
     /**
      * Creates new form ChangeEmail
      *
-     * @param _userID ID of the logged in user
+     * @param _userId ID of the logged in user
      */
     public ChangeEmail(int _userId) {
         initComponents();

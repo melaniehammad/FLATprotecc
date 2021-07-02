@@ -10,8 +10,8 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -24,8 +24,8 @@ import main.java.de.frauas.progex.flatprotecc.Connect2DB;
  */
 public class OverviewScreen extends javax.swing.JFrame {
 
-    private int userId;
-    private DefaultTableModel tableModel;
+    private final int userId;
+    private final DefaultTableModel tableModel;
 
     /**
      * Creates new form OverviewScreen
@@ -55,7 +55,7 @@ public class OverviewScreen extends javax.swing.JFrame {
         jTable.setRowSorter(sorter);
         // ... und der Sorter muss wissen, welche Daten er sortieren muss
         sorter.setModel(tableModel);
-        // damit Spalten nicht verschoben werden können
+        // damit Spalten nicht verschoben werden kÃ¶nnen
         jTable.getTableHeader().setReorderingAllowed(false);
 
         jTable.getColumnModel().getColumn(0).setMinWidth(0);
@@ -86,7 +86,7 @@ public class OverviewScreen extends javax.swing.JFrame {
                 tableModel.addRow(new Object[]{id, title, username, email, com});
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Fehler in GUI/MainMenu/EventReadFromDB!");
             System.out.println("Auszug aus Fehlermeldung: " + e);
         }

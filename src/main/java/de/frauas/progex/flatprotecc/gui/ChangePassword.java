@@ -23,7 +23,7 @@ import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
  * @author ana
  */
 public class ChangePassword extends javax.swing.JFrame {
-    private int userId;
+    private final int userId;
     /**
      * Creates new form ChangePassword
      */
@@ -157,7 +157,6 @@ public class ChangePassword extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
-        EncryptorDecryptor decryptor = new EncryptorDecryptor();
         String tmp = new String(jFieldOldPassword.getPassword());
         PasswordManager pwm = new PasswordManager();
         MailSender sender = new MailSender();
@@ -189,7 +188,7 @@ public class ChangePassword extends javax.swing.JFrame {
                     stm.executeUpdate(sql);
                     System.out.println("UPDATE complete");
 
-                    JOptionPane.showMessageDialog(null, "Email changed sucessfully!", "Change Email", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Password changed sucessfully!", "Change Password", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Wrong Code! Please try again.", "2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);

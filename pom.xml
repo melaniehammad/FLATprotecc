@@ -4,11 +4,15 @@
     <artifactId>FLATprotecc</artifactId>
     <version>1.0.0</version>
     <name>FLATprotecc</name>
-	
+    <!-- CHARSET -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <!-- BUILD -->
     <build>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
-			<!-- COMPILE -->
+            <!-- COMPILE -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
@@ -16,30 +20,30 @@
                     <release>15</release>
                 </configuration>
             </plugin>
-			<!-- ASSEMBLE JAR -->
-			<plugin>
-			<artifactId>maven-assembly-plugin</artifactId>
+            <!-- ASSEMBLE JAR -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
                     <archive>
-						<manifest>
-							<mainClass>main.java.de.frauas.progex.flatprotecc.gui.LoginScreen</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
+                        <manifest>
+                            <mainClass>main.java.de.frauas.progex.flatprotecc.gui.LoginScreen</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 	

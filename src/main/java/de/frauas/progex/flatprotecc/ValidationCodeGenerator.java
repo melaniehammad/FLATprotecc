@@ -18,11 +18,9 @@ public class ValidationCodeGenerator {
     
         Random generator = new Random();
         validationCode = String.format("%04d", generator.nextInt(10000));   //number between 0000 and 9999 as String
-        
     }
     
     public boolean checkValidationCode(String validationCode_) {
-    
         return validationCode_.equals(validationCode);
     }
     

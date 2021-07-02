@@ -9,14 +9,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import main.java.de.frauas.progex.flatprotecc.Connect2DB;
 import main.java.de.frauas.progex.flatprotecc.EncryptorDecryptor;
-import main.java.de.frauas.progex.flatprotecc.MailSender;
-import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
 
 /**
  *
@@ -32,6 +29,8 @@ public class AddEntry extends javax.swing.JFrame {
     public AddEntry(int _userId) {
         initComponents();
         userId = _userId;
+        
+        jProgressBar1.setSecurityLevel(jPasswordField.getText());   //init password bar
         
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();

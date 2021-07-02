@@ -26,7 +26,7 @@ public class PasswordManager {
         System.out.println("New Salt: " + new String(Base64.getEncoder().encode(salt)));
         return new String(Base64.getEncoder().encode(salt));
     }
-    
+
     public String hash(String password, String _salt) {
         final int ITERATIONS = 65536;
         byte[] salt = Base64.getDecoder().decode(_salt);

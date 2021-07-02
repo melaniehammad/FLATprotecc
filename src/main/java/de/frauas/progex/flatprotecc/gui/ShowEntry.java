@@ -253,15 +253,11 @@ public class ShowEntry extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBackActionPerformed
 
     private void jButtonEditEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditEntryActionPerformed
-        // TODO add your handling code here:
-        java.awt.EventQueue.invokeLater(new Runnable() { // Open RegistrationScreen
-            public void run() {
-                new EditEntry(userId, entryId).setVisible(true);
-            }
-        });
-
+        java.awt.EventQueue.invokeLater(() -> {
+            new EditEntry(userId, entryId).setVisible(true);
+        } // Open RegistrationScreen
+        );
         this.dispose();
-
     }//GEN-LAST:event_jButtonEditEntryActionPerformed
 
     private void jButtonDeleteEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteEntryActionPerformed
