@@ -5,6 +5,8 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,6 +31,10 @@ public class ShowEntry extends javax.swing.JFrame {
      */
     public ShowEntry(int userId, int entryId) {
         initComponents();
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+        
         this.userId = userId;
         this.entryId = entryId;
         EncryptorDecryptor decryptor = new EncryptorDecryptor();
