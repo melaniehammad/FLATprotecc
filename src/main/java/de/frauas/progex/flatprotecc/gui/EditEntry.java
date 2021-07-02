@@ -254,6 +254,8 @@ public class EditEntry extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter a platform or service name, that has less than 100 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         } else if (jTextComment.getText().length() >= 400) {
             JOptionPane.showMessageDialog(null, "Comment cannot be longer than 400 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        }else if (password.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter a password", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         }else {
             try {
                 Statement stm = conn.createStatement();
