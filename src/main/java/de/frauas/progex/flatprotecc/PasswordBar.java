@@ -41,7 +41,7 @@ public class PasswordBar extends JProgressBar {
             score += 20;
         }
         switch(score){
-            case 0 -> setString("Horrible");
+            case 0 -> setString("Empty Password");
             case 20 -> setString("Bad");
             case 40 -> setString("Mediocre");
             case 60 -> setString("Decent");

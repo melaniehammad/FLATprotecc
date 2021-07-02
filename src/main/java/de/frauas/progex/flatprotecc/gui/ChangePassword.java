@@ -5,6 +5,8 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +29,11 @@ public class ChangePassword extends javax.swing.JFrame {
      */
     public ChangePassword(int _userId) {
         initComponents();
+        
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+        
         userId = _userId;
     }
 

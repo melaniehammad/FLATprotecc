@@ -5,6 +5,8 @@
  */
 package main.java.de.frauas.progex.flatprotecc.gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -30,6 +32,10 @@ public class AddEntry extends javax.swing.JFrame {
     public AddEntry(int _userId) {
         initComponents();
         userId = _userId;
+        
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
     }
 
     /**
@@ -233,6 +239,8 @@ public class AddEntry extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter a platform or service name, that has less than 100 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         } else if (jTextComment.getText().length() >= 400) {
             JOptionPane.showMessageDialog(null, "Comment cannot be longer than 400 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+        }else if (password.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter a password", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         }else {
             try {
                 Statement stm = conn.createStatement();
