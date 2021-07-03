@@ -202,6 +202,7 @@ public class ChangePassword extends javax.swing.JFrame {
 
     private void jFieldNewPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFieldNewPasswordActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jFieldNewPasswordActionPerformed
 
 
