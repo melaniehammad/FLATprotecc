@@ -10,6 +10,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="alwaysOnTop" type="boolean" value="true"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[400, 400]"/>
     </Property>
@@ -60,7 +61,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabelComment" min="-2" pref="95" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="170" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabelEmail" min="-2" pref="95" max="-2" attributes="0"/>
@@ -83,12 +84,12 @@
                               <Component id="jLabelTitle" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jTextUsername" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="jTextFieldTitle" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldTitle" min="-2" pref="169" max="-2" attributes="0"/>
                                   <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jTextUsername" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
