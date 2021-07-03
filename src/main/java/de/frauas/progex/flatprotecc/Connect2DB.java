@@ -17,7 +17,7 @@ public class Connect2DB {
     {
         try 
         {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/flat_protecc?user=root&password=ADshYWri9F&useLegacyDatetimeCode=false&serverTimezone=UTC");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/flat_protecc?user=root&password=Al0t6s0l!Root&useLegacyDatetimeCode=false&serverTimezone=UTC");
             if(conn!=null){
                 System.out.println("Verbindung war erfolgreich!");
             }
