@@ -12,7 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import main.java.de.frauas.progex.flatprotecc.*;
+import main.java.de.frauas.progex.flatprotecc.Connect2DB;
+import main.java.de.frauas.progex.flatprotecc.MailSender;
+import main.java.de.frauas.progex.flatprotecc.PasswordManager;
+import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
 /**
  *
  * @author lucas
@@ -186,7 +189,7 @@ public class LoginScreen extends javax.swing.JFrame {
                         conn.close();
                         this.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(null,"Wrong Code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null,"Wrong or expired code! Please try again.","2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null,"Please enter a valid email","2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);

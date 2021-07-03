@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import main.java.de.frauas.progex.flatprotecc.Connect2DB;
-import main.java.de.frauas.progex.flatprotecc.EncryptorDecryptor;
 import main.java.de.frauas.progex.flatprotecc.MailSender;
 import main.java.de.frauas.progex.flatprotecc.PasswordManager;
 import main.java.de.frauas.progex.flatprotecc.ValidationCodeGenerator;
@@ -191,7 +190,7 @@ public class ChangePassword extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Password changed sucessfully!", "Change Password", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Wrong Code! Please try again.", "2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Wrong or expired code! Please try again.", "2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } catch (SQLException ex) {

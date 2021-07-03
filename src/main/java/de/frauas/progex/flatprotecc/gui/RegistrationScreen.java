@@ -8,7 +8,6 @@ package main.java.de.frauas.progex.flatprotecc.gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;

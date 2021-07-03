@@ -195,7 +195,7 @@ public class ChangeEmail extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Email changed sucessfully!", "Change Email", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Wrong Code! Please try again.", "2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Wrong or expired code! Please try again.", "2-Factor-Authentification", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } catch (SQLException ex) {
