@@ -7,12 +7,15 @@ package main.java.de.frauas.progex.flatprotecc.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -26,12 +29,15 @@ public class OverviewScreen extends javax.swing.JFrame {
 
     private final int userId;
     private final DefaultTableModel tableModel;
+    private Timer logoutTimer;
+    private final int TEN_MINUTES_IN_MILLIS = 600000;
 
     /**
      * Creates new form OverviewScreen
      */
     public OverviewScreen(int userId) {
         initComponents();
+        setLogoutTimer();
         
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
@@ -209,7 +215,7 @@ public class OverviewScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonChangeEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangeEmailActionPerformed
-        // TODO add your handling code here:
+        setLogoutTimer();
         JFrame frame = this;
         frame.setEnabled(false);
         ChangeEmail ce;
@@ -221,12 +227,13 @@ public class OverviewScreen extends javax.swing.JFrame {
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                 frame.setEnabled(true);
                 frame.toFront();
+                setLogoutTimer();
             }
         });
     }//GEN-LAST:event_jButtonChangeEmailActionPerformed
 
     private void jButtonChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangePasswordActionPerformed
-        // TODO add your handling code here:
+        setLogoutTimer();
         JFrame frame = this;
         frame.setEnabled(false);
         ChangePassword cp;
@@ -238,6 +245,7 @@ public class OverviewScreen extends javax.swing.JFrame {
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                 frame.setEnabled(true);
                 frame.toFront();
+                setLogoutTimer();
             }
         });
 
@@ -245,7 +253,7 @@ public class OverviewScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonChangePasswordActionPerformed
 
     private void jButtonAddEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddEntryActionPerformed
-        // TODO add your handling code here:
+        setLogoutTimer();
         JFrame frame = this;
         frame.setEnabled(false);
         AddEntry ae;
@@ -258,11 +266,13 @@ public class OverviewScreen extends javax.swing.JFrame {
                 frame.setEnabled(true);
                 frame.toFront();
                 refreshTable();
+                setLogoutTimer();
             }
         });
     }//GEN-LAST:event_jButtonAddEntryActionPerformed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        setLogoutTimer();
         JTable table = (JTable) evt.getSource();
         int row = table.rowAtPoint(evt.getPoint());
         System.out.println(row + "selected id=" + table.getValueAt(row, 0));
@@ -278,11 +288,29 @@ public class OverviewScreen extends javax.swing.JFrame {
                 frame.setEnabled(true);
                 frame.toFront();
                 refreshTable();
+                setLogoutTimer();
             }
         });
         
     }//GEN-LAST:event_jTableMouseClicked
 
+    private void logout(){
+        logoutTimer.stop();
+        JOptionPane.showMessageDialog(null, "Session timed out. Please login again!", "Session Timeout", JOptionPane.INFORMATION_MESSAGE);
+        
+        LoginScreen login = new LoginScreen();
+        this.setVisible(false);
+        login.setVisible(true);
+        this.dispose();
+    }
+    
+    private void setLogoutTimer(){
+        if(logoutTimer != null) logoutTimer.stop();
+        logoutTimer = new Timer(TEN_MINUTES_IN_MILLIS, (ActionEvent e) -> {
+            logout();
+        });
+        logoutTimer.start();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAddEntry;
