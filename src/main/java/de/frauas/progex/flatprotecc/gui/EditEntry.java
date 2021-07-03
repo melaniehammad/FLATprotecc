@@ -251,17 +251,17 @@ public class EditEntry extends javax.swing.JFrame {
         String passwordConfirm = String.valueOf(jTextFieldPwConf.getText());
 
         if (!password.equals(passwordConfirm)) {
-            JOptionPane.showMessageDialog(this, "Password does not match with confirmed password!", "Password Check", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Password does not match with confirmed password!", "Password Check", JOptionPane.ERROR_MESSAGE);
         } else if (jTextEmail.getText().equals("") && jTextUsername.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please enter a username or Email", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter a username or Email", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         } else if (jTextFieldTitle.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please enter a platform or service name", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter a platform or service name", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         } else if (jTextFieldTitle.getText().length() >= 100) {
-            JOptionPane.showMessageDialog(this, "Please enter a platform or service name, that has less than 100 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter a platform or service name, that has less than 100 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         } else if (jTextAreaComment.getText().length() >= 400) {
-            JOptionPane.showMessageDialog(this, "Comment cannot be longer than 400 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Comment cannot be longer than 400 characters", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         }else if (password.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please enter a password", "Incomplete data", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter a password", "Incomplete data", JOptionPane.ERROR_MESSAGE);
         }else {
             try {
                 Statement stm = conn.createStatement();
