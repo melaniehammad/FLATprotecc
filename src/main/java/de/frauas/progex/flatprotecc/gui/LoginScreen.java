@@ -7,6 +7,8 @@ package main.java.de.frauas.progex.flatprotecc.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.VK_ENTER;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -83,6 +85,12 @@ public class LoginScreen extends javax.swing.JFrame {
         jLabelPassword.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabelPassword.setText("Password");
 
+        jPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordFieldKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -150,8 +158,26 @@ public class LoginScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
+        login();
+    }//GEN-LAST:event_jButtonLoginActionPerformed
+
+    private void jButtonCreateNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateNewAccountActionPerformed
         // TODO add your handling code here:
-        Connect2DB connCreator = new Connect2DB();
+        java.awt.EventQueue.invokeLater(() -> {
+            new RegistrationScreen().setVisible(true);
+        } // Open RegistrationScreen
+        );
+        
+        this.dispose();
+        
+    }//GEN-LAST:event_jButtonCreateNewAccountActionPerformed
+
+    private void jPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) login();
+    }//GEN-LAST:event_jPasswordFieldKeyPressed
+
+    private void login(){
+    Connect2DB connCreator = new Connect2DB();
         Connection conn = connCreator.StartConnection();
         if (conn != null) {
             System.out.println("###########LOGIN############");
@@ -205,21 +231,8 @@ public class LoginScreen extends javax.swing.JFrame {
             System.out.println("VendorError: " + ex.getErrorCode());
             JOptionPane.showMessageDialog(null,"Email wrong! Please try again.","Login failed", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
-    }//GEN-LAST:event_jButtonLoginActionPerformed
-
-    private void jButtonCreateNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateNewAccountActionPerformed
-        // TODO add your handling code here:
-        java.awt.EventQueue.invokeLater(() -> {
-            new RegistrationScreen().setVisible(true);
-        } // Open RegistrationScreen
-        );
-        
-        this.dispose();
-        
-    }//GEN-LAST:event_jButtonCreateNewAccountActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */
