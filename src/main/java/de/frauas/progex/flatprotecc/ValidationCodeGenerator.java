@@ -6,7 +6,6 @@
 package main.java.de.frauas.progex.flatprotecc;
 
 import java.util.Random;
-import java.util.Date;
 
 /**
  *
