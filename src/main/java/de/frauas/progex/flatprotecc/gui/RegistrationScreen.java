@@ -78,6 +78,11 @@ public class RegistrationScreen extends javax.swing.JFrame {
         });
 
         jButtonCancel.setText("Cancel");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -163,7 +168,7 @@ public class RegistrationScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         Connect2DB connCreator = new Connect2DB();
         Connection conn = connCreator.StartConnection();
-       
+
         MailSender sender = new MailSender();
         ValidationCodeGenerator gen = new ValidationCodeGenerator();
 
@@ -201,7 +206,7 @@ public class RegistrationScreen extends javax.swing.JFrame {
 
                 java.awt.EventQueue.invokeLater(() -> {
                     new LoginScreen().setVisible(true);
-                } // Open OverviewScreen
+                } // Open LoginScreen
                 );
 
                 this.dispose();
@@ -211,6 +216,15 @@ public class RegistrationScreen extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButtonConfirmActionPerformed
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        java.awt.EventQueue.invokeLater(() -> {
+            new LoginScreen().setVisible(true);
+        } // Open LoginScreen
+        );
+
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
