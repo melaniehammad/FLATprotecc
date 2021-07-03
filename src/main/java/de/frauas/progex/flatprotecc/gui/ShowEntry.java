@@ -253,11 +253,17 @@ public class ShowEntry extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBackActionPerformed
 
     private void jButtonEditEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditEntryActionPerformed
-        java.awt.EventQueue.invokeLater(() -> {
-            new EditEntry(userId, entryId).setVisible(true);
-        } // Open RegistrationScreen
-        );
-        this.dispose();
+        javax.swing.JFrame frame = this;
+        EditEntry ee = new EditEntry(userId, entryId);
+        ee.setVisible(true);
+        this.setVisible(false);
+        ee.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                frame.dispose();
+            }
+        });
+        
     }//GEN-LAST:event_jButtonEditEntryActionPerformed
 
     private void jButtonDeleteEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteEntryActionPerformed
