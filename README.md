@@ -3,7 +3,7 @@ GitHub for ProgEx SoSe2021 at Frankfurt Univerity of Applied Sciences
 
 ## Database setup(MySQL Workbench): 
 1. Create new connection "flat_protecc".
-2. Go to Server->Data import, load dump file from zip-file (server_export.sql).
+2. Go to Server->Data import, load dump files from zip-file (server_export).
 3. New default schema: flat_protecc.
 4. Start import.
 5. There won't be any sample data that you will be able to access because we cannot create an account for you, as we cannot access your e-mails.
