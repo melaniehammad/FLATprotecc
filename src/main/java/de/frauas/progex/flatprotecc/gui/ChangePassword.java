@@ -86,6 +86,11 @@ public class ChangePassword extends javax.swing.JFrame {
         jButtonCancel.setBackground(new java.awt.Color(255, 0, 0));
         jButtonCancel.setText("Cancel");
         jButtonCancel.setMaximumSize(new java.awt.Dimension(77, 23));
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -173,6 +178,8 @@ public class ChangePassword extends javax.swing.JFrame {
 
             if (!String.valueOf(jFieldNewPassword.getPassword()).equals(String.valueOf(jFieldNewPasswordConf.getPassword()))) {       //New Password match
                 JOptionPane.showMessageDialog(null, "Email does not match with confirmed email!", "Email Change", JOptionPane.ERROR_MESSAGE);
+            }  else if (String.valueOf(jFieldNewPassword.getPassword()).length() < 8) {
+                JOptionPane.showMessageDialog(null, "Please enter a password with at least 8 characters", "Registration failed", JOptionPane.ERROR_MESSAGE);
             } else if (!pwm.verifyPassword(tmp, rs.getString("hashValue"), rs.getString("salt"))) {      //Verify Password
                 JOptionPane.showMessageDialog(null, "Password wrong! Please try again.", "Authentification failed", JOptionPane.ERROR_MESSAGE);
             } else if (sender.sendValidationCode(rs.getString("mail"), gen.getValidationCode())) {      //2 Factor Auth
@@ -202,7 +209,13 @@ public class ChangePassword extends javax.swing.JFrame {
 
     private void jFieldNewPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFieldNewPasswordActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jFieldNewPasswordActionPerformed
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

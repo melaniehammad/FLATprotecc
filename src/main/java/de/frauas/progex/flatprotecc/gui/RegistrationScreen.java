@@ -176,6 +176,8 @@ public class RegistrationScreen extends javax.swing.JFrame {
         //checks if password and confirm password match
         if (!String.valueOf(jPasswordField.getPassword()).equals(String.valueOf(jPasswordFieldConf.getPassword()))) {
             JOptionPane.showMessageDialog(null, "Password and Confirm Password doesn't match!", "Registration failed", JOptionPane.ERROR_MESSAGE);
+        } else if (String.valueOf(jPasswordField.getPassword()).length() < 8) {
+            JOptionPane.showMessageDialog(null, "Please enter a password with at least 8 characters", "Registration failed", JOptionPane.ERROR_MESSAGE);
         } else if (!sender.sendValidationCode(jTextFieldEmail.getText(), gen.getValidationCode())) {
             JOptionPane.showMessageDialog(null, "Please enter a valid email", "2-Factor-Authentification failed", JOptionPane.ERROR_MESSAGE);
         } else {
