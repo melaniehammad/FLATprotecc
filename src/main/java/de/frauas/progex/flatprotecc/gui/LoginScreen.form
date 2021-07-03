@@ -8,7 +8,7 @@
       <Dimension value="null"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[250, 300]"/>
+      <Dimension value="[200, 250]"/>
     </Property>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>

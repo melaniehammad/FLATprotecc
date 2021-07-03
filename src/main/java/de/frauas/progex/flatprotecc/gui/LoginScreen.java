@@ -57,7 +57,7 @@ public class LoginScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FLATprotecc - Password Manager");
         setMaximumSize(null);
-        setMinimumSize(new java.awt.Dimension(250, 300));
+        setMinimumSize(new java.awt.Dimension(200, 250));
         setResizable(false);
 
         jLabelLogin.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
