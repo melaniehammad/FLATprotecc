@@ -65,6 +65,7 @@ public class ChangeEmail extends javax.swing.JFrame {
         jTextFieldConfNewEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("FLATprotecc - Password Manager");
         setMinimumSize(new java.awt.Dimension(300, 250));
 
         jLabelNewEmail.setText("New Email");
